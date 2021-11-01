@@ -1,0 +1,38 @@
+*{
+    user-select: none;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background: cadetblue;
+}
+.chess-board{
+    height: 400px;
+    width: 400px;
+    display: flex;
+    border: 4px solid black;
+}
+.square-grid {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+.square{
+    width: 45px;
+    height: 45px;
+}
+.square-grid.white-Box {
+    background: white;
+}
+.square-grid.black-Box{
+    background: gray;
+}
