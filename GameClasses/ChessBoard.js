@@ -164,8 +164,8 @@ class GameBoard{
      */
     reloadBoard(){
         //This method will take update the icon of every button in GameButtons based on its corresponding entry in GameBoard
-        for(var i = 0; i<8; i++){
-            for(var j = 0; j<8; j++){
+        for(var i = 0; i<8; i++){//row
+            for(var j = 0; j<8; j++){//column
                 if(this.GameBoard[i][j].color == 'white' || this.GameBoard[i][j].color == 'black'){
                     this.GameButtons[i][j].innerHTML = "<img src="+this.GameBoard[i][j].getImage() + ">";
                 }
