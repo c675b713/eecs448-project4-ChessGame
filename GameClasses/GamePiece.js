@@ -101,15 +101,31 @@ class Pawn extends GamePiece{
      */
      enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
         if(this.color == 'white'){
-            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
-            if(this.row == 1){
+            if(GameBoardClass.GameBoard[this.row+1][this.column].color == 'null'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+            }
+            if(this.row == 1 && GameBoardClass.GameBoard[this.row+2][this.column].color != 'black'){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column]);
+            }
+            if(GameBoardClass.GameBoard[this.row+1][this.column+1].color == 'black'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1]);
+            }
+            if(GameBoardClass.GameBoard[this.row+1][this.column-1].color == 'black'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1]);
             }
         }
         if(this.color == 'black'){
-            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
-            if(this.row == 6){
+            if(GameBoardClass.GameBoard[this.row-1][this.column].color == 'null'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+            }
+            if(this.row == 6 && GameBoardClass.GameBoard[this.row-2][this.column].color != 'white'){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column]);
+            }
+            if(GameBoardClass.GameBoard[this.row-1][this.column+1].color == 'white'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1]);
+            }
+            if(GameBoardClass.GameBoard[this.row-1][this.column-1].color == 'white'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
             }
         }
     }
