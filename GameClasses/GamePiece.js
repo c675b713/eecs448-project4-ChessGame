@@ -92,6 +92,27 @@ class Pawn extends GamePiece{
             return '../img/pawn_black.svg';
         }
     }
+
+    /**
+     * method that runs when a piece is clicked, figures out what buttons to add the move script to
+     * @function enableValidMovements
+     * @memberof Pawn
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     */
+     enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
+        if(this.color == 'white'){
+            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+            if(this.row == 1){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column]);
+            }
+        }
+        if(this.color == 'black'){
+            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+            if(this.row == 6){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column]);
+            }
+        }
+    }
 }
 
 class Knight extends GamePiece{
@@ -111,6 +132,65 @@ class Knight extends GamePiece{
         }
         else{
             return './img/knight_black.svg';
+        }
+    }
+
+    /**
+     * method that runs when a piece is clicked, figures out what buttons to add the move script to
+     * @function enableValidMovements
+     * @memberof Knight
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     */
+     enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
+        //this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[i][j]);
+        GameBoardClass.GameButtons[this.row][this.column].disabled = false;
+        GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
+        //up and right
+        if(this.row+2 <= 7 && this.column+1 <= 7){
+            if(GameBoardClass.GameBoard[this.row+2][this.column+1].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column+1])
+            }
+        }
+        if(this.row+1 <= 7 && this.column+2 <= 7){
+            if(GameBoardClass.GameBoard[this.row+1][this.column+2].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+2])
+            }
+        }
+
+        //down and right
+        if(this.row-1 >= 0 && this.column+2 <= 7){
+            if(GameBoardClass.GameBoard[this.row-1][this.column+2].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+2])
+            }
+        }
+        if(this.row-2 >= 0 && this.column+1 <= 7){
+            if(GameBoardClass.GameBoard[this.row-2][this.column+1].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column+1])
+            }
+        }
+
+        //up and left
+        if(this.row+1 <= 7 && this.column-2 >= 0){
+            if(GameBoardClass.GameBoard[this.row+1][this.column-2].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-2])
+            }
+        }
+        if(this.row+2 <= 7 && this.column-1 >= 0 ){
+            if(GameBoardClass.GameBoard[this.row+2][this.column-1].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column-1])
+            }
+        }
+
+        //down and left
+        if(this.row-1 >= 0 && this.column-2 >= 0){
+            if(GameBoardClass.GameBoard[this.row-1][this.column-2].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-2])
+            }
+        }
+        if(this.row-2 >= 0 && this.column-1 >= 0){
+            if(GameBoardClass.GameBoard[this.row-2][this.column-1].color != this.color){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column-1])
+            }
         }
     }
 }
@@ -167,7 +247,7 @@ class Bishop extends GamePiece{
         GameBoardClass.GameButtons[this.row][this.column].disabled = false;
         GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
         //this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[i][j]);
-        if(this.row < 6 && this.column < 6){
+        if(this.row < 7 && this.column < 7){
             var iteratorPiece = GameBoardClass.GameBoard[this.row + 1][this.column + 1];
             while(iteratorPiece.color != this.color){//for every piece up and to the right
                 this.setMoveFunction(GameBoardClass, iteratorPiece);
@@ -179,7 +259,7 @@ class Bishop extends GamePiece{
                 
             }
         }
-        if(this.row >0 && this.column < 6){
+        if(this.row >0 && this.column < 7){
             var iteratorPiece = GameBoardClass.GameBoard[this.row - 1][this.column + 1];
             while(iteratorPiece.color != this.color){//for every piece up and to the right
                 this.setMoveFunction(GameBoardClass, iteratorPiece);
@@ -191,7 +271,7 @@ class Bishop extends GamePiece{
                 
             }
         }
-        if(this.row < 6 && this.column >0){
+        if(this.row < 7 && this.column >0){
             var iteratorPiece = GameBoardClass.GameBoard[this.row + 1][this.column - 1];
             while(iteratorPiece.color != this.color){//for every piece up and to the right
                 this.setMoveFunction(GameBoardClass, iteratorPiece);
