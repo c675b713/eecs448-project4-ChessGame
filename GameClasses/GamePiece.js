@@ -50,6 +50,14 @@ class GamePiece {
         }
     }
 
+    disableAllPieces(GameBoardClass){
+        for(var i = 0; i<8; i++){//for every piece in GameBoard
+            for(var j = 0; j<8; j++){
+                GameBoardClass.GameButtons[i][j].disabled = true;
+            }
+        }
+    }
+
     /**
      * adds the movement script to the given piece
      * @function setMoveFunction
@@ -100,6 +108,9 @@ class Pawn extends GamePiece{
      * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
      */
      enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
+        this.disableAllPieces(GameBoardClass);
+        GameBoardClass.GameButtons[this.row][this.column].disabled = false;
+        GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
         if(this.color == 'white'){
             if(GameBoardClass.GameBoard[this.row+1][this.column].color == 'null'){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
@@ -159,6 +170,7 @@ class Knight extends GamePiece{
      */
      enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
         //this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[i][j]);
+        this.disableAllPieces(GameBoardClass);
         GameBoardClass.GameButtons[this.row][this.column].disabled = false;
         GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
         //up and right
@@ -259,7 +271,7 @@ class Bishop extends GamePiece{
      * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
      */
      enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
-        //this.DisableAllSquares();
+        this.disableAllPieces(GameBoardClass);
         GameBoardClass.GameButtons[this.row][this.column].disabled = false;
         GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
         //this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[i][j]);
