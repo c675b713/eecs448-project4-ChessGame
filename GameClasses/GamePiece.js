@@ -38,6 +38,18 @@ class GamePiece {
         }
     }
 
+    getOppositeColor(piece){
+        if(piece.color == 'white'){
+            return 'black';
+        }
+        else if(piece.color == 'black'){
+            return 'white';
+        }
+        else{
+            return 'null';
+        }
+    }
+
     /**
      * adds the movement script to the given piece
      * @function setMoveFunction
@@ -141,6 +153,67 @@ class Bishop extends GamePiece{
         }
         else{
             return './img/bishop_black.svg';
+        }
+    }
+
+    /**
+     * method that runs when a piece is clicked, figures out what buttons to add the move script to
+     * @function enableValidMovements
+     * @memberof Bishop
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     */
+     enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
+        //this.DisableAllSquares();
+        GameBoardClass.GameButtons[this.row][this.column].disabled = false;
+        GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
+        //this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[i][j]);
+        if(this.row < 6 && this.column < 6){
+            var iteratorPiece = GameBoardClass.GameBoard[this.row + 1][this.column + 1];
+            while(iteratorPiece.color != this.color){//for every piece up and to the right
+                this.setMoveFunction(GameBoardClass, iteratorPiece);
+                if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                if(iteratorPiece.row < 6 && iteratorPiece.column < 6){
+                    iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row + 1][iteratorPiece.column + 1];
+                }
+                else {break}
+                
+            }
+        }
+        if(this.row >0 && this.column < 6){
+            var iteratorPiece = GameBoardClass.GameBoard[this.row - 1][this.column + 1];
+            while(iteratorPiece.color != this.color){//for every piece up and to the right
+                this.setMoveFunction(GameBoardClass, iteratorPiece);
+                if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                if(iteratorPiece.row >0 && iteratorPiece.column < 6){
+                    iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row - 1][iteratorPiece.column + 1];
+                }
+                else {break}
+                
+            }
+        }
+        if(this.row < 6 && this.column >0){
+            var iteratorPiece = GameBoardClass.GameBoard[this.row + 1][this.column - 1];
+            while(iteratorPiece.color != this.color){//for every piece up and to the right
+                this.setMoveFunction(GameBoardClass, iteratorPiece);
+                if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                if(iteratorPiece.row < 6 && iteratorPiece.column >0){
+                    iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row + 1][iteratorPiece.column - 1];
+                }
+                else {break}
+                
+            }
+        }
+        if(this.row >0 && this.column >0){
+            var iteratorPiece = GameBoardClass.GameBoard[this.row - 1][this.column - 1];
+            while(iteratorPiece.color != this.color){//for every piece up and to the right
+                this.setMoveFunction(GameBoardClass, iteratorPiece);
+                if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                if(iteratorPiece.row >0 && iteratorPiece.column >0){
+                    iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row - 1][iteratorPiece.column - 1];
+                }
+                else {break}
+                
+            }
         }
     }
 }
