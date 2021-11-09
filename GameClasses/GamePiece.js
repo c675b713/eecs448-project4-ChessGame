@@ -260,7 +260,7 @@ class Rook extends GamePiece{
          while(iteratorPiece.color != this.color){
              this.setMoveFunction(GameBoardClass, iteratorPiece);
              if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
-             if(iteratorPiece.row < 6){
+             if(iteratorPiece.row < 7){
                  iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row + 1][iteratorPiece.column];
              }
              else {break}
@@ -286,7 +286,7 @@ class Rook extends GamePiece{
          while(iteratorPiece.color != this.color){//for every piece up and to the right
              this.setMoveFunction(GameBoardClass, iteratorPiece);
              if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
-             if(iteratorPiece.column < 6){
+             if(iteratorPiece.column < 7){
                  iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iteratorPiece.column + 1];
              }
              else {break}
