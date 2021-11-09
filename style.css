@@ -2,7 +2,7 @@
     user-select: none;
 }
 body{
-    display: flex;
+    
     align-items: center;
     justify-content: center;
     margin: 0;
@@ -11,12 +11,13 @@ body{
     width: 100vw;
     background: cadetblue;
 }
+/* Main square object */
 .chess-board{
     height: 400px;
     width: 400px;
     display: flex;
     border: 4px solid black;
-    position: fixed; left: 900px; top: center;
+    
 }
 
 .square-grid {
@@ -44,12 +45,26 @@ body{
 .playerturn{
     width: 200px;
     height: 50px;
+    display: inline-block;
     background-color: azure;
+    position: fixed; left: 700px; top: 400px;
     
 }
-#black{
-
+#white{
+    width: 60px;
+    height: 20px;
+    padding: 10px;
+    display: inline-block;
+    font-size: 100%;
 }
+#black{
+    width: 60px;
+    height: 20px;
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
+}
+
 
 
 /* Timer styling */
@@ -67,10 +82,12 @@ body{
     margin: 0px auto;
 }
  #start{
-     text-align: center;
-     position: fixed; left: 20px;
- }
+    text-align: center;
+    position: fixed; left: 20px;
+}
  
- .timer.time-buttons{
-     position: fixed; left: 20px;
- }
+.timer.time-buttons{
+    position: fixed; left: 20px;
+}
+
+

@@ -1,3 +1,5 @@
+//This is NEEDED
+
 export const pieceImg = {
     'king_black': './img/king_black.svg',
     'king_white': './img/king_white.svg', 

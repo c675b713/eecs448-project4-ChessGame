@@ -1,3 +1,6 @@
+
+//This is NEEDED
+
 //initial placement of pieces
 export const initialPlace = {
 
