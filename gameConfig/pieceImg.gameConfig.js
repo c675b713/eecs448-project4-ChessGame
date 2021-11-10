@@ -13,7 +13,7 @@ export const pieceImg = {
     'rook_black': './img/rook_black.svg',
     'rook_white': './img/rook_white.svg',
 
-    'bishop_black': './img/bishop_black.svg',
+    'bishop_black': './img/bishop_black60.svg',
     'bishop_white': './img/bishop_white.svg',
 
     'pawn_black': './img/pawn_black.svg',
