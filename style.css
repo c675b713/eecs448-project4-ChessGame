@@ -18,7 +18,7 @@ body{
 /* Grid Formatting */
 header{
     grid-area: header;
-    font-size: 50px;
+    font-size: 80px;
     background-color: #608068;
     text-align: center;
     
@@ -43,7 +43,7 @@ aside{
 
 footer{
     grid-area: footer;
-    background-color: #86698c;
+    background-color: #30323D;
 }
 /* ############################## */
 
@@ -92,26 +92,33 @@ button img{
 
 .playerturn{
     grid-area: nav;
-    width: 200px;
-    height: 50px;
+    width: 260px;
+    height: 80px;
     display: inline-block;
     background-color: azure;
     
-    
 }
-#white{
-    width: 60px;
-    height: 20px;
-    padding: 10px;
-    display: inline-block;
-    font-size: 100%;
+
+.white{
+    width: 120px;
+    height: 30px;
+    padding: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    float: left;
+    text-align: center;
+    font-size: 30px;    
 }
-#black{
-    width: 60px;
-    height: 20px;
-    padding: 10px;
-    margin: 5px;
-    display: inline-block;
+
+.black{
+    width: 120px;
+    height: 30px;
+    padding: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    float: right;
+    text-align: center;
+    font-size: 30px;
 }
 /* ############################## */
 
