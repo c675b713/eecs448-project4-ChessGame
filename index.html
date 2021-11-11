@@ -9,36 +9,44 @@
 
 
     <body>
+        <!-- Header -->
         <header>
             The Game Of Chess
         </header>
 
+
+        <!-- Nav -->
         <nav>
-            <!-- Player Turn -->
-            <div class="playerturn" style="--aspect-ratio:2/1;">
-                <div class="white">
-                    White
+            <div class="back-nav">
+                <!-- Player Turn -->
+                <div class="playerturn" style="--aspect-ratio:2/1;">
+                    <div class="white">
+                        White
+                    </div>
+                    <div class="black">
+                        Black
+                    </div>
                 </div>
-                <div class="black">
-                    Black
+            
+
+            <!-- Timer -->
+                <div class="timer">
+                    <div id="display">
+                       00:00
+                    </div>
+                    <button id="time-buttons" class="start-time">
+                        Start
+                    </button>
+                    <button id="time-buttons" class="reset">
+                        Reset
+                    </button>
                 </div>
             </div>
-        
-            <!-- Timer 
-            <div class="timer">
-                <div id="display">
-                    00:00
-                </div>
-                <button id="time-buttons" class="start">
-                    Start
-                </button>
-                <button id="time-buttons" class="reset">
-                    Reset
-                </button>
-            </div>
-            -->
+            
         </nav>
 
+
+        <!-- Section -->
         <section>
             <!-- Chess Board -->
             <div class="chess-board GameBoard" style="--aspect-ratio:1/1;">
@@ -115,27 +123,32 @@
                 <button id="h8" class="square-grid black-Box"></button>
             </div>
 
-
-        
         </section>
 
+
+        <!-- Aside -->
         <aside>
-            
-            <div class="gameOptions">
-                <button class="start"></button>
-                <button class="end-turn"></button>
-            </div>
+            <div class="back-aside">
+                <div class="gameOptions">
+                    <button class="start-game"> Start Game</button>
+                    <button class="end-turn">End Game</button>
+                    <button class="new-game">New Game</button>
+                </div>
             
 
             <!-- Captured Pieces-->
-            <div class="captured-pieces">
+                <div class="captured-pieces">
 
+                </div>
             </div>
         </aside>
 
+
+        <!-- Footer -->
         <footer>
 
         </footer>
+
 
         <!-- Scripts -->
         <script src="./app.js" type="module"></script>

@@ -28,6 +28,12 @@ nav{
     grid-area: nav;
     background-color: #E8C547;
     flex-direction: column;
+    text-align: center;
+    
+}
+.back-nav{
+    background-color: #E8C547;
+    
 }
 
 section{
@@ -39,6 +45,12 @@ section{
 aside{
     grid-area: aside;
     background-color: #DB3A34;
+    flex-direction: column;
+    text-align: center;
+}
+.back-aside{
+    background-color: #DB3A34;
+
 }
 
 footer{
@@ -47,7 +59,7 @@ footer{
 }
 /* ############################## */
 
-
+/* ================ Section =============== */
 /* Main Chess Board */
 .chess-board{
     height: 520px;
@@ -86,19 +98,21 @@ button img{
     top: 8px;
 }
 /* ############################## */
+/* ======================================== */
 
-
+/* ================== NAV ================== */
 /* Player Turn styling */
-
 .playerturn{
     grid-area: nav;
     width: 260px;
     height: 80px;
     display: inline-block;
     background-color: azure;
+    margin-top: 10px;
+    outline: 3px solid black;
+    
     
 }
-
 .white{
     width: 120px;
     height: 30px;
@@ -109,7 +123,6 @@ button img{
     text-align: center;
     font-size: 30px;    
 }
-
 .black{
     width: 120px;
     height: 30px;
@@ -122,14 +135,14 @@ button img{
 }
 /* ############################## */
 
-
-
 /* Timer styling */
-
 .timer{
     height: 100px;
     width: 200px;
-    background-color: antiquewhite;
+    background-color: white;
+    display: inline-block;
+    margin-top: 10px;
+    outline: 3px solid black;
 
 }
 #display{
@@ -145,9 +158,55 @@ button img{
  
 .timer.time-buttons{
     position: fixed; left: 20px;
+    
+}
+/* ############################## */
+/* ======================================== */
+
+
+/* ================= ASIDE ================= */
+
+/* Captured Pieces */
+.captured-pieces{
+    grid-area: aside;
+    width: 260px;
+    height: 440px;
+    background-color: white;
+    outline: 3px solid black;
+    display: inline-block;
+    margin-top: 10px;
 }
 /* ############################## */
 
+/* Game Options */
+.gameOptions{
+    grid-area: aside;
+    background-color: white;
+    outline: 3px solid black;
+    width: 260px;
+    height: 80px;
+    display: inline-block;
+    margin-top: 10px;
+}
+.start-game, .end-turn, .new-game{
+    width: 100px;
+    height: 30px;
+    outline: 3px solid black;
+    display: inline-block;
+}
+
+/* ############################## */
+/* ======================================== */
+
+.button{
+    transition-duration: 0.4s;
+}
+
+button:hover{
+    background-color: white;
+    color: #30323D;
+
+}
 
 /* Scaling */
 /*
