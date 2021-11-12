@@ -139,6 +139,43 @@ class Pawn extends GamePiece{
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
             }
         }
+        this.checkEnPassant(GameBoardClass);
+    }
+    
+    checkEnPassant(GameBoardClass){//I made this a seperate method so we don't have just a ton of conditions in the validMovements method
+        var gameBoard = GameBoardClass.GameBoard;
+        if(this.color == 'white' && this.row == 4){
+            if(gameBoard[this.row][this.column+1].color == 'black' &&gameBoard[this.row][this.column+1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1],gameBoard[this.row][this.column+1]);
+            }
+            if(gameBoard[this.row][this.column-1].color == 'black' &&gameBoard[this.row][this.column-1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1],gameBoard[this.row][this.column-1]);
+            }
+        }
+        if(this.color == 'black' && this.row == 3){
+            if(gameBoard[this.row][this.column+1].color == 'white' &&gameBoard[this.row][this.column+1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1],gameBoard[this.row][this.column+1]);
+            }
+            if(gameBoard[this.row][this.column-1].color == 'white' &&gameBoard[this.row][this.column-1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1], gameBoard[this.row][this.column-1]);
+            }
+        }
+    }
+
+    enPassantMove(GameBoardClass, destinationPiece, killedPawn){//
+        var destinationButton = GameBoardClass.GameButtons[destinationPiece.row][destinationPiece.column]
+        destinationButton.disabled = false;
+        destinationButton.onclick = (() =>{
+            GameBoardClass.GameBoard[killedPawn.row][killedPawn.column] = new NullPiece();
+            GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
+            if(this.color == 'white'){
+                GameBoardClass.startTurn('black');
+            }
+            else{
+                GameBoardClass.startTurn('white');
+            }
+
+        });
     }
 }
 
