@@ -139,6 +139,44 @@ class Pawn extends GamePiece{
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
             }
         }
+        this.checkEnPassant(GameBoardClass);
+    }
+    
+    checkEnPassant(GameBoardClass){//I made this a seperate method so we don't have just a ton of conditions in the validMovements method
+        var gameBoard = GameBoardClass.GameBoard;
+        if(this.color == 'white' && this.row == 4){
+            if(gameBoard[this.row][this.column+1].color == 'black' &&gameBoard[this.row][this.column+1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1],gameBoard[this.row][this.column+1]);
+            }
+            if(gameBoard[this.row][this.column-1].color == 'black' &&gameBoard[this.row][this.column-1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1],gameBoard[this.row][this.column-1]);
+            }
+        }
+        if(this.color == 'black' && this.row == 3){
+            if(gameBoard[this.row][this.column+1].color == 'white' &&gameBoard[this.row][this.column+1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1],gameBoard[this.row][this.column+1]);
+            }
+            if(gameBoard[this.row][this.column-1].color == 'white' &&gameBoard[this.row][this.column-1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1], gameBoard[this.row][this.column-1]);
+            }
+        }
+    }
+
+    enPassantMove(GameBoardClass, destinationPiece, killedPawn){//
+        var destinationButton = GameBoardClass.GameButtons[destinationPiece.row][destinationPiece.column]
+        destinationButton.disabled = false;
+        destinationButton.onclick = (() =>{
+            GameBoardClass.GameBoard[killedPawn.row][killedPawn.column] = new NullPiece();
+            GameBoardClass.GameBoard[killedPawn.row][killedPawn.column].setLocation(killedPawn.row,killedPawn.column);
+            GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
+            if(this.color == 'white'){
+                GameBoardClass.startTurn('black');
+            }
+            else{
+                GameBoardClass.startTurn('white');
+            }
+
+        });
     }
 }
 
@@ -607,7 +645,68 @@ class King extends GamePiece{
             this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column-1]);
           }
         }
+        this.castlingCheck(GameBoardClass);
      }
+    castlingCheck(GameBoardClass){
+        if(this.color == 'white' && GameBoardClass.whiteCanCastle){
+            if(GameBoardClass.GameBoard[0][1].pieceType == 'null' && GameBoardClass.GameBoard[0][2].pieceType == 'null' && GameBoardClass.GameBoard[0][3].pieceType == 'null' && GameBoardClass.GameBoard[0][0].pieceType == 'rook'){//white long castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[0][2]);
+            }
+            if(GameBoardClass.GameBoard[0][5].pieceType == 'null' && GameBoardClass.GameBoard[0][6].pieceType == 'null' && GameBoardClass.GameBoard[0][7].pieceType == 'rook'){//white short castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[0][6]);
+            }
+        }
+        if(this.color == 'black' && GameBoardClass.blackCanCastle){
+            if(GameBoardClass.GameBoard[7][1].pieceType == 'null' && GameBoardClass.GameBoard[7][2].pieceType == 'null' && GameBoardClass.GameBoard[7][3].pieceType == 'null' && GameBoardClass.GameBoard[7][0].pieceType == 'rook'){//black long castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[7][2]);
+            }
+            if(GameBoardClass.GameBoard[7][5].pieceType == 'null' && GameBoardClass.GameBoard[7][6].pieceType == 'null' && GameBoardClass.GameBoard[7][7].pieceType == 'rook'){//black short castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[7][6]);
+            }
+        }
+    }
+
+    setCastleMove(GameBoardClass, destinationPiece){
+        var destinationButton = GameBoardClass.GameButtons[destinationPiece.row][destinationPiece.column];
+        destinationButton.disabled = false;
+        destinationButton.onclick = (() =>{
+            if(this.color == 'white'){
+                if(destinationPiece.column == 2){//Long Castle
+                    GameBoardClass.GameBoard[0][0] = new NullPiece();
+                    GameBoardClass.GameBoard[0][0].setLocation(0,0);
+                    GameBoardClass.GameBoard[0][3] = new Rook('white');
+                    GameBoardClass.GameBoard[0][3].setLocation(0,3);
+                }
+                if(destinationPiece.column == 6){//short Castle
+                    GameBoardClass.GameBoard[0][7] = new NullPiece();
+                    GameBoardClass.GameBoard[0][7].setLocation(0,7);
+                    GameBoardClass.GameBoard[0][5] = new Rook('white');
+                    GameBoardClass.GameBoard[0][5].setLocation(0,5);
+                }
+            }
+            else{
+                if(destinationPiece.column == 2){//Long Castle
+                    GameBoardClass.GameBoard[7][0] = new NullPiece();
+                    GameBoardClass.GameBoard[7][0].setLocation(7,0);
+                    GameBoardClass.GameBoard[7][3] = new Rook('black');
+                    GameBoardClass.GameBoard[7][3].setLocation(7,3);
+                }
+                if(destinationPiece.column == 6){//short Castle
+                    GameBoardClass.GameBoard[7][7] = new NullPiece();
+                    GameBoardClass.GameBoard[7][7].setLocation(7,7);
+                    GameBoardClass.GameBoard[7][5] = new Rook('black');
+                    GameBoardClass.GameBoard[7][5].setLocation(7,5);
+                }
+            }
+            GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
+            if(this.color == 'white'){
+                GameBoardClass.startTurn('black');
+            }
+            else{
+                GameBoardClass.startTurn('white');
+            }
+        });
+    }
 }
 
 class NullPiece extends GamePiece{
