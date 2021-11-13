@@ -9,6 +9,8 @@ class GameBoard{
         this.reloadBoard();
         this.whiteCapturedPieces = [];
         this.blackCapturedPieces = [];
+        this.whiteCanCastle = true;
+        this.blackCanCastle = true;
         this.startTurn('white');
         
     }
@@ -184,6 +186,8 @@ class GameBoard{
                 }
             }
         }
+        if(this.GameBoard[0][4].pieceType != 'king'){this.whiteCanCastle = false;}
+        if(this.GameBoard[7][4].pieceType != 'king'){this.whiteCanCastle = false;}
     }
 
     /**
@@ -194,7 +198,6 @@ class GameBoard{
      */
     startTurn(color){
         //enable all the buttons of the current color
-        var self = this;
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
                 if(this.GameBoard[i][j].color == color){//enable all the buttons of the current team's color
