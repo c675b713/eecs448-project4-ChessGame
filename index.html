@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">    
         <title>The Game of Chess</title>
         <link rel="stylesheet" href="style.css">
     </head>
@@ -17,8 +20,9 @@
 
         <!-- Nav -->
         <nav>
-            <div class="back-nav">
+            <div class="nav-container">
                 <!-- Player Turn -->
+                <h2>Player Turn</h2>
                 <div class="playerturn" style="--aspect-ratio:2/1;">
                     <div class="white">
                         White
@@ -27,9 +31,9 @@
                         Black
                     </div>
                 </div>
-            
-
-            <!-- Timer -->
+        
+                <!-- Timer -->
+                <h2>Timer</h2>
                 <div class="timer">
                     <div id="display">
                        00:00
@@ -37,9 +41,13 @@
                     <button id="time-buttons" class="start-time">
                         Start
                     </button>
+                    <button id="time-buttons" class="pause">
+                        Stop
+                    </button>
                     <button id="time-buttons" class="reset">
                         Reset
                     </button>
+                    
                 </div>
             </div>
             
@@ -128,17 +136,22 @@
 
         <!-- Aside -->
         <aside>
-            <div class="back-aside">
+            <div class="aside-container">
                 <div class="gameOptions">
-                    <button class="start-game"> Start Game</button>
-                    <button class="end-turn">End Game</button>
-                    <button class="new-game">New Game</button>
+                    <h3>Game Options</h3>
+                        <button class="start-game"> Start Game</button>
+                        <button class="end-turn">End Game</button>
+                        <button class="new-game">New Game</button>
+                    
                 </div>
             
 
             <!-- Captured Pieces-->
                 <div class="captured-pieces">
+                   <h3>Captured Pieces </h3>
+                    <div class="piece-container">
 
+                    </div>
                 </div>
             </div>
         </aside>
@@ -146,7 +159,7 @@
 
         <!-- Footer -->
         <footer>
-
+            <h3>Made by: Zachary Andrews, Caleb Bennetts, Matrim Besch, Dilpreet Singh, Ian Strasma</h3>
         </footer>
 
 
