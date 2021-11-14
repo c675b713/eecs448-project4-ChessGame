@@ -1,36 +1,89 @@
 *{
     user-select: none;
-}
-body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    width: 100vw;
-    background: cadetblue;
-}
-.chess-board{
-    height: 400px;
-    width: 400px;
-    display: flex;
-    border: 4px solid black;
-    position: fixed; left: 900px; top: center;
+    font-family: 'Monsterrat', sans-serif;
 }
 
+:root{
+    --clr-dark: #1D212C;
+    --clr-lightShade: #49565B;
+    --clr-light: #DBDBDB;
+    --clr-main: #BD1E1E;
+    --clr-cultured: #e9ecef;
+    --clr-state-gray: #6c757d;
+    --clr-davys-grey: #495057;
+
+    --clr-alice-blue: #e7ebee;
+    --clr-rosso-corsa: #D00000;
+    --clr-black-coral: #5f666d;
+    --clr-jet: #292929;
+    
+}
+
+body{
+    display: grid;
+    grid-template-areas: 
+        "header header header"
+        "nav section aside"
+        "footer footer footer";
+    grid-template-rows: 100px 1fr 40px;
+    grid-template-columns: 25% 1fr 25%;
+    grid-gap: 5px;
+    margin: 10px;
+    padding: 0;
+    height: 100vh;
+    background: var(--clr-jet);
+}
+/* Grid Formatting */
+header{
+    grid-area: header;
+    text-rendering: optimizeLegibility;
+    text-transform: uppercase;
+    font-size: 80px;
+    text-align: center;
+    color: var(--clr-dark);
+    background-color: var(--clr-alice-blue);
+    letter-spacing: 0.05em;
+    text-shadow: 
+        4px 4px 0px var(--clr-alice-blue),
+        7px 7px 0px rgba(0, 0, 0, 0.2);
+
+}
+
+/* ############################## */
+
+/* ================ Section =============== */
+section{
+    background-color: var(--clr-state-gray);
+
+    grid-area: section;
+    position: relative;
+}
+/* Main Chess Board */
+.chess-board{
+    height: 520px;
+    width: 520px;
+    display: flex;
+    border: 6px solid black;
+    margin: 0 auto;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    
+}
 .square-grid {
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
     position: relative;
     display: flex;
     box-sizing: border-box;
-    justify-content: center;
-    align-items: center;
+    
+    
 }
 .square{
-    width: 45px;
-    height: 45px;
+    padding-top: 5%;
+    width: 60px;
+    height: 60px;
 }
 .square-grid.white-Box {
     background: white;
@@ -39,25 +92,79 @@ body{
     background: gray;
 }
 
-/* Player Turn styling */
+button img{
+    top: 8px;
+}
+/* ############################## */
+/* ======================================== */
 
-.playerturn{
-    width: 200px;
-    height: 50px;
-    background-color: azure;
+/* ================== NAV ================== */
+nav{
+    grid-area: nav;
+    background-color: var(--clr-black-coral);
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 1em;
     
 }
-#black{
-
+.nav-container{
+    padding: 0.5em;
+    background-color: var(--clr-alice-blue);
+    margin: 0 auto;
+    height: 98%;
+    
 }
-
+.nav-container h2{
+    color: var(--clr-jet);
+    letter-spacing: 0.05em;
+    
+}
+/* Player Turn styling */
+.playerturn{
+    grid-area: nav;
+    display: inline-block;
+    background-color: var(--clr-alice-blue);
+    margin-top: 10px;
+    outline: 3px solid var(--clr-state-gray); 
+    letter-spacing: 0.05em; 
+}
+.white{
+    width: 4em;
+    height: 30px;
+    padding: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    float: left;
+    text-align: center;
+    font-size: 30px;    
+}
+.black{
+    width: 4em;
+    height: 30px;
+    padding: 5px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    float: right;
+    text-align: center;
+    font-size: 30px;
+}
+/* ############################## */
 
 /* Timer styling */
-
 .timer{
-    height: 100px;
-    width: 200px;
-    background-color: antiquewhite;
+    height: 20%;
+    width: 100%;
+    background-color: var(--clr-alice-blue);
+    display: inline-block;
+    margin-top: 10px;
+    outline: 3px solid var(--clr-state-gray);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 
 }
 #display{
@@ -67,10 +174,136 @@ body{
     margin: 0px auto;
 }
  #start{
-     text-align: center;
-     position: fixed; left: 20px;
- }
+    text-align: center;
+    
+}
  
- .timer.time-buttons{
-     position: fixed; left: 20px;
- }
+#time-buttons{
+    width: 12em;
+    height: 4rem;
+    outline: 2px solid var(--clr-davys-grey); 
+    justify-content: center;
+    margin: 0.5rem;
+}
+/* ############################## */
+/* ======================================== */
+
+
+/* ================= ASIDE ================= */
+aside{
+    grid-area: aside;
+    background-color: var(--clr-black-coral);
+    /* flex-direction: column; */
+    justify-content: center;
+    text-align: center;
+    padding: 1em;
+}
+.aside-container{
+    grid-area: aside;
+    
+    grid-template-columns: 80%;
+    grid-template-rows: 20% 60%;
+    grid-template-areas: 
+        "gameOpt gameOpt"
+        "captPiece captPiece";
+    grid-row-gap: 20px;
+}
+/* Captured Pieces */
+.captured-pieces{
+    grid-area: captPiece;
+    width: 100%;
+    height: 40rem;
+    background-color: var(--clr-alice-blue);
+    outline: 3px solid var(--clr-state-gray);
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+    /* margin-top: 10px; */
+}
+/* Game Options */
+.gameOptions{
+    background-color: var(--clr-alice-blue);
+    outline: 3px solid var(--clr-state-gray);
+    width: 100%;
+    height: 12rem;
+    grid-area: gameOpt;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+.gameOptions h3{
+    
+    margin: 5px;
+    color: var(--clr-jet);
+    letter-spacing: 0.05em;
+}
+.start-game, .end-turn, .new-game{
+    width: 12em;
+    height: 4rem;
+    outline: 2px solid var(--clr-davys-grey); 
+    justify-content: center;
+    margin: 1rem;
+   
+} 
+.piece-container{
+    width: 95%;
+    height: 80%;
+    background-color: var(--clr-alice-blue);
+    
+}
+/* ############################## */
+/* ======================================== */
+
+.button{
+    transition-duration: 0.4s;
+}
+button:hover{
+    background-color: var(--clr-alice-blue);
+    color: #30323D;
+
+}
+
+/* ############# Footer ############# */
+footer{
+    grid-area: footer;
+    background-color: var(--clr-jet);
+    text-align: center;
+}
+footer h3{
+    font-size: 80%;
+    color: var(--clr-alice-blue);
+}
+
+
+/* Scaling */
+/*
+[style*="--aspect-ratio"] > :first-child{
+    width: 100%;
+}
+
+[style*="--aspect-ratio"] > img {
+    height: auto;
+}
+
+@supports (--custom:property) {
+    [style*="--aspect-ratio"]{
+        position: relative;
+    }
+    [style*="--aspect-ratio"]::before{
+        content: "";
+        display: block;
+        padding-bottom: calc(100% / (var(--aspect-ratio)));
+    }
+    [style*="--aspect-ratio"] > :first-child{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+    }
+}
+*/
+/* ############################## */
+

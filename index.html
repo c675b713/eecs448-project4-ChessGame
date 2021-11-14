@@ -3,117 +3,170 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">    
         <title>The Game of Chess</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
 
     <body>
-        <div class="chess-board GameBoard">
-            
-            <button id="a1" class="square-grid black-Box"></button>
-            <button id="b1" class="square-grid white-Box"></button>
-            <button id="c1" class="square-grid black-Box"></button>
-            <button id="d1" class="square-grid white-Box"></button>
-            <button id="e1" class="square-grid black-Box"></button>
-            <button id="f1" class="square-grid white-Box"></button>
-            <button id="g1" class="square-grid black-Box"></button>
-            <button id="h1" class="square-grid white-Box"></button>
-            
-            <button id="a2" class="square-grid white-Box"></button>
-            <button id="b2" class="square-grid black-Box"></button>
-            <button id="c2" class="square-grid white-Box"></button>
-            <button id="d2" class="square-grid black-Box"></button>
-            <button id="e2" class="square-grid white-Box"></button>
-            <button id="f2" class="square-grid black-Box"></button>
-            <button id="g2" class="square-grid white-Box"></button>
-            <button id="h2" class="square-grid black-Box"></button>
+        <!-- Header -->
+        <header>
+            The Game Of Chess
+        </header>
 
-            <button id="a3" class="square-grid black-Box"></button>
-            <button id="b3" class="square-grid white-Box"></button>
-            <button id="c3" class="square-grid black-Box"></button>
-            <button id="d3" class="square-grid white-Box"></button>
-            <button id="e3" class="square-grid black-Box"></button>
-            <button id="f3" class="square-grid white-Box"></button>
-            <button id="g3" class="square-grid black-Box"></button>
-            <button id="h3" class="square-grid white-Box"></button>
 
-            <button id="a4" class="square-grid white-Box"></button>
-            <button id="b4" class="square-grid black-Box"></button>
-            <button id="c4" class="square-grid white-Box"></button>
-            <button id="d4" class="square-grid black-Box"></button>
-            <button id="e4" class="square-grid white-Box"></button>
-            <button id="f4" class="square-grid black-Box"></button>
-            <button id="g4" class="square-grid white-Box"></button>
-            <button id="h4" class="square-grid black-Box"></button>
-
-            <button id="a5" class="square-grid black-Box"></button>
-            <button id="b5" class="square-grid white-Box"></button>
-            <button id="c5" class="square-grid black-Box"></button>
-            <button id="d5" class="square-grid white-Box"></button>
-            <button id="e5" class="square-grid black-Box"></button>
-            <button id="f5" class="square-grid white-Box"></button>
-            <button id="g5" class="square-grid black-Box"></button>
-            <button id="h5" class="square-grid white-Box"></button>
-
-            <button id="a6" class="square-grid white-Box"></button>
-            <button id="b6" class="square-grid black-Box"></button>
-            <button id="c6" class="square-grid white-Box"></button>
-            <button id="d6" class="square-grid black-Box"></button>
-            <button id="e6" class="square-grid white-Box"></button>
-            <button id="f6" class="square-grid black-Box"></button>
-            <button id="g6" class="square-grid white-Box"></button>
-            <button id="h6" class="square-grid black-Box"></button>
-
-            <button id="a7" class="square-grid black-Box"></button>
-            <button id="b7" class="square-grid white-Box"></button>
-            <button id="c7" class="square-grid black-Box"></button>
-            <button id="d7" class="square-grid white-Box"></button>
-            <button id="e7" class="square-grid black-Box"></button>
-            <button id="f7" class="square-grid white-Box"></button>
-            <button id="g7" class="square-grid black-Box"></button>
-            <button id="h7" class="square-grid white-Box"></button>
-
-            <button id="a8" class="square-grid white-Box"></button>
-            <button id="b8" class="square-grid black-Box"></button>
-            <button id="c8" class="square-grid white-Box"></button>
-            <button id="d8" class="square-grid black-Box"></button>
-            <button id="e8" class="square-grid white-Box"></button>
-            <button id="f8" class="square-grid black-Box"></button>
-            <button id="g8" class="square-grid white-Box"></button>
-            <button id="h8" class="square-grid black-Box"></button>
-        </div>
-
-        <div class="playerturn">
-            <div id="white">
-                White
+        <!-- Nav -->
+        <nav>
+            <div class="nav-container">
+                <!-- Player Turn -->
+                <h2>Player Turn</h2>
+                <div class="playerturn" style="--aspect-ratio:2/1;">
+                    <div class="white">
+                        White
+                    </div>
+                    <div class="black">
+                        Black
+                    </div>
+                </div>
+        
+                <!-- Timer -->
+                <h2>Timer</h2>
+                <div class="timer">
+                    <div id="display">
+                       00:00
+                    </div>
+                    <button id="time-buttons" class="start-time">
+                        Start
+                    </button>
+                    <button id="time-buttons" class="pause">
+                        Stop
+                    </button>
+                    <button id="time-buttons" class="reset">
+                        Reset
+                    </button>
+                    
+                </div>
             </div>
-            <div id="black">
-                Black
-            </div>
-        </div>
+            
+        </nav>
+
+
+        <!-- Section -->
+        <section>
+            <!-- Chess Board -->
+            <div class="chess-board GameBoard" style="--aspect-ratio:1/1;">
+                <button id="a1" class="square-grid black-Box"></button>
+                <button id="b1" class="square-grid white-Box"></button>
+                <button id="c1" class="square-grid black-Box"></button>
+                <button id="d1" class="square-grid white-Box"></button>
+                <button id="e1" class="square-grid black-Box"></button>
+                <button id="f1" class="square-grid white-Box"></button>
+                <button id="g1" class="square-grid black-Box"></button>
+                <button id="h1" class="square-grid white-Box"></button>
+                
+                <button id="a2" class="square-grid white-Box"></button>
+                <button id="b2" class="square-grid black-Box"></button>
+                <button id="c2" class="square-grid white-Box"></button>
+                <button id="d2" class="square-grid black-Box"></button>
+                <button id="e2" class="square-grid white-Box"></button>
+                <button id="f2" class="square-grid black-Box"></button>
+                <button id="g2" class="square-grid white-Box"></button>
+                <button id="h2" class="square-grid black-Box"></button>
     
-
-        <div class="timer">
-            <div id="display">
-                00:00
+                <button id="a3" class="square-grid black-Box"></button>
+                <button id="b3" class="square-grid white-Box"></button>
+                <button id="c3" class="square-grid black-Box"></button>
+                <button id="d3" class="square-grid white-Box"></button>
+                <button id="e3" class="square-grid black-Box"></button>
+                <button id="f3" class="square-grid white-Box"></button>
+                <button id="g3" class="square-grid black-Box"></button>
+                <button id="h3" class="square-grid white-Box"></button>
+    
+                <button id="a4" class="square-grid white-Box"></button>
+                <button id="b4" class="square-grid black-Box"></button>
+                <button id="c4" class="square-grid white-Box"></button>
+                <button id="d4" class="square-grid black-Box"></button>
+                <button id="e4" class="square-grid white-Box"></button>
+                <button id="f4" class="square-grid black-Box"></button>
+                <button id="g4" class="square-grid white-Box"></button>
+                <button id="h4" class="square-grid black-Box"></button>
+    
+                <button id="a5" class="square-grid black-Box"></button>
+                <button id="b5" class="square-grid white-Box"></button>
+                <button id="c5" class="square-grid black-Box"></button>
+                <button id="d5" class="square-grid white-Box"></button>
+                <button id="e5" class="square-grid black-Box"></button>
+                <button id="f5" class="square-grid white-Box"></button>
+                <button id="g5" class="square-grid black-Box"></button>
+                <button id="h5" class="square-grid white-Box"></button>
+    
+                <button id="a6" class="square-grid white-Box"></button>
+                <button id="b6" class="square-grid black-Box"></button>
+                <button id="c6" class="square-grid white-Box"></button>
+                <button id="d6" class="square-grid black-Box"></button>
+                <button id="e6" class="square-grid white-Box"></button>
+                <button id="f6" class="square-grid black-Box"></button>
+                <button id="g6" class="square-grid white-Box"></button>
+                <button id="h6" class="square-grid black-Box"></button>
+    
+                <button id="a7" class="square-grid black-Box"></button>
+                <button id="b7" class="square-grid white-Box"></button>
+                <button id="c7" class="square-grid black-Box"></button>
+                <button id="d7" class="square-grid white-Box"></button>
+                <button id="e7" class="square-grid black-Box"></button>
+                <button id="f7" class="square-grid white-Box"></button>
+                <button id="g7" class="square-grid black-Box"></button>
+                <button id="h7" class="square-grid white-Box"></button>
+    
+                <button id="a8" class="square-grid white-Box"></button>
+                <button id="b8" class="square-grid black-Box"></button>
+                <button id="c8" class="square-grid white-Box"></button>
+                <button id="d8" class="square-grid black-Box"></button>
+                <button id="e8" class="square-grid white-Box"></button>
+                <button id="f8" class="square-grid black-Box"></button>
+                <button id="g8" class="square-grid white-Box"></button>
+                <button id="h8" class="square-grid black-Box"></button>
             </div>
-            <button id="time-buttons" class="start">
-                Start
-            </button>
-            <button id="time-buttons" class="reset">
-                Reset
-            </button>
-        </div>
-<!--
-        <div class="gameOptions">
-            <button class="start"></button>
-            <button class="end-turn"></button>
+
+        </section>
+
+
+        <!-- Aside -->
+        <aside>
+            <div class="aside-container">
+                <div class="gameOptions">
+                    <h3>Game Options</h3>
+                        <button class="start-game"> Start Game</button>
+                        <button class="end-turn">End Game</button>
+                        <button class="new-game">New Game</button>
+                    
+                </div>
             
-        </div>
--->
+
+            <!-- Captured Pieces-->
+                <div class="captured-pieces">
+                   <h3>Captured Pieces </h3>
+                    <div class="piece-container">
+
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+
+        <!-- Footer -->
+        <footer>
+            <h3>Made by: Zachary Andrews, Caleb Bennetts, Matrim Besch, Dilpreet Singh, Ian Strasma</h3>
+        </footer>
+
+
+        <!-- Scripts -->
         <script src="./app.js" type="module"></script>
         <script src="./GameClasses/GamePiece.js"></script>
         <script src="./GameClasses/ChessBoard.js"></script>
     </body>
+
 </html>

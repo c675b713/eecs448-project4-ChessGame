@@ -94,10 +94,10 @@ class Pawn extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/pawn_white.svg';
+            return './img/pawn_white60.svg';
         }
         else{
-            return '../img/pawn_black.svg';
+            return '../img/pawn_black60.svg';
         }
     }
 
@@ -193,10 +193,10 @@ class Knight extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/knight_white.svg';
+            return './img/knight_white60.svg';
         }
         else{
-            return './img/knight_black.svg';
+            return './img/knight_black60.svg';
         }
     }
 
@@ -274,10 +274,10 @@ class Rook extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/rook_white.svg';
+            return './img/rook_white60.svg';
         }
         else{
-            return './img/rook_black.svg';
+            return './img/rook_black60.svg';
         }
     }
     /**
@@ -359,10 +359,10 @@ class Bishop extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/bishop_white.svg';
+            return './img/bishop_white60.svg';
         }
         else{
-            return './img/bishop_black.svg';
+            return './img/bishop_black60.svg';
         }
     }
 
@@ -441,10 +441,10 @@ class Queen extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/queen_white.svg';
+            return './img/queen_white60.svg';
         }
         else{
-            return './img/queen_black.svg';
+            return './img/queen_black60.svg';
         }
     }
         /**
@@ -573,10 +573,10 @@ class King extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/king_white.svg';
+            return './img/king_white60.svg';
         }
         else{
-            return './img/king_black.svg';
+            return './img/king_black60.svg';
         }
     }
     /**
