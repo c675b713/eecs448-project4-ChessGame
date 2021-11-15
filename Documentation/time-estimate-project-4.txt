@@ -1,0 +1,8 @@
+Estimate: 45 Hours
+
+Looking at the coding workload based on how long it takes to write a single Line of Code we can estimate
+that it will take __ hours to do the work. The addition code for the UI Component will take an additional 
+~150 lines of code and the JavaScript and HTML part will take ~200 lines of code. The test suite is estimated
+to be ~350 lines of code. If each line of code takes ~3 minutes (.05 hours) than that adds up to 35 hours 
+(700 * .05 = 35). Adding on to the this the time it will take to do the additional documentation and team meetings,
+an estimated 2 hours per team member, we are left with an estimate of 45 hours to complete Project 4.
