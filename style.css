@@ -167,11 +167,17 @@ nav{
     justify-content: center;
 
 }
-#display{
+.timer-container{
+    display: inline-flex;
+    
+
+}
+
+#display-white, #display-black{
     width: 100%;
-    font-size: 48px;
+    font-size: 40px;
     text-align: center;
-    margin: 0px auto;
+    padding: 10px;
 }
  #start{
     text-align: center;
