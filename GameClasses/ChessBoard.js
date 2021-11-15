@@ -10,7 +10,6 @@ class GameBoard{
         this.whiteCapturedPieces = [];
         this.blackCapturedPieces = [];
         this.startTurn('white');
-        
     }
     /**
      * takes the buttons from the index.html and puts them into an 8x8 array
@@ -187,14 +186,43 @@ class GameBoard{
     }
 
     /**
-     * enables all the pieces of the current player
+     * returns an array of the pieces that are able to attack the piece param
+     * @function isCheck
+     * @memberof GameBoard
+     * @param piece; could be king or a tile the king could move to (in the case of checking for checkmate)
+     */
+     isCheck(kingPiece){//first we need to find all possible attackers, then see if they could attack the king
+        var arr = [];
+        var attackBool = 0
+        for(var i = 0; i<8; i++){
+            for(var j = 0; j<8; j++){
+                if(this.GameBoard[i][j].color == kingPiece.getOppositeColor(kingPiece)){//if piece is of opposite color
+                    attackBool = this.GameBoard[i][j].couldAttack(this, kingPiece);
+                    console.log(i, ':', j, ' ', this.GameBoard[i][j].pieceType, ': ', attackBool);
+                    //console.log("kingPos: ", kingPiece.row, kingPiece.column);
+                    if(attackBool){//if a piece could attack the parameter piece
+                        arr.push(this.GameBoard[i][j]);
+                    }
+                }
+                if(i == 7 && j == 7){
+                    return arr;
+                }
+            }
+        }
+    }
+
+
+    /**
+     * enables all the pieces of the current player; if king is in check, only enables king piece
      * @function startTurn
      * @memberof GameBoard
      * @param color current player, 'white' or 'black' 
      */
     startTurn(color){
+        //console.log(color);
         //enable all the buttons of the current color
         var self = this;
+        var checkPieces = [];
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
                 if(this.GameBoard[i][j].color == color){//enable all the buttons of the current team's color
@@ -205,7 +233,93 @@ class GameBoard{
                 }
             }
         }
-        
+        for(var i = 0; i<8; i++){
+            for(var j = 0; j<8; j++){
+                if(this.GameBoard[i][j].color == color){
+                    if(this.GameBoard[i][j].pieceType == 'king'){//tried putting this in first loop but i think this will only work
+                        checkPieces = this.isCheck(this.GameBoard[i][j]);//...if all buttons are enabled/disabled first
+                        if(checkPieces.length != 0){
+                            this.buttonsConfigCheck(checkPieces, this.GameBoard[i][j]);
+                            if(this.isCheckMate(kingPiece)){
+                                console.log('game over');//ending UI triggered here instead of console.log
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            if(checkPieces.length != 0){break;}
+        }
+    }
+
+    buttonsConfigCheck(checkPieces, kingPiece){
+        var count = 0;
+        var currentPiece;
+        for(var i = 0; i<8; i++){
+            for(var j = 0; j<8; j++){
+                //if(this.GameBoard[i][j].pieceType == 'rook' && this.GameBoard[i][j].color == kingPiece.color){
+                  //  console.log("Rook Row: ", this.GameBoard[i][j].row, "Rook Column: ", this.GameBoard[i][j].column);
+                //}
+                currentPiece = this.GameBoard[i][j];
+                for(var k = 0; k<checkPieces.length; k++){
+                    //console.log(checkPieces[k].pieceType);
+                    if(currentPiece.couldAttack(checkPieces[k])){
+                        count++;
+                    }
+                }
+                if(count == 0 && currentPiece != kingPiece){
+                    this.disableButton(currentPiece);
+                }
+            }
+        }
+    }
+
+    isCheckMate(kingPiece){
+        var count = 0;
+        var temp = [];
+        if(kingPiece.row+1<=7){
+            temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column]);
+            if(temp.length != 0){
+                count++;
+            }
+            //up
+            if(kingPiece.column+1 <= 7){
+                temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column+1]);
+                if(temp.length != 0){
+                    count++;
+                }
+                //...and to right
+            }
+            if(kingPiece.column-1 >= 0){
+                temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column-1]);
+                if(temp.length != 0){
+                    count++;
+                }
+                //...and to left
+            }
+        }
+        if(kingPiece.row-1>=0){//down
+            temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column]);
+            if(temp.length != 0){
+                count++;
+            }
+            if(kingPiece.column+1 <= 7){
+                temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column+1]);
+                if(temp.length != 0){
+                    count++;
+                }
+                //...and to right
+            }
+            if(kingPiece.column-1 >= 0){
+                temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column-1]);
+                if(temp.length != 0){
+                    count++;
+                }
+                //...and to left
+            }
+        }
+        if(count == 8){return 1;}
+        else {return 0;}
     }
 }
 gameboard = new GameBoard();
