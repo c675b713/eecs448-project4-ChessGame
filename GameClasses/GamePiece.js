@@ -163,12 +163,12 @@ class Pawn extends GamePiece{
     couldAttack(GameBoardClass, kingPiece){
         if(this.color == 'white'){
             if(this.column+1 <=7 && this.row+1 <=7){
-                if(GameBoardClass.GameBoard[this.row+1][this.column+1] == kingPiece && kingPiece.color == 'black'){
+                if(GameBoardClass.GameBoard[this.row+1][this.column+1] == kingPiece){
                     return 1;
                 }
             }
             if(this.column-1 >=0 && this.row+1 <=7){
-                if(GameBoardClass.GameBoard[this.row+1][this.column-1] == kingPiece && kingPiece.color == 'black'){
+                if(GameBoardClass.GameBoard[this.row+1][this.column-1] == kingPiece){
                     return 1;
                 }
             }
@@ -178,13 +178,13 @@ class Pawn extends GamePiece{
             else {return 0;}
         }
         if(this.color == 'black'){
-            if(this.column+1 <=7 && this.row-1 <=7){
-                if(GameBoardClass.GameBoard[this.row-1][this.column+1] == kingPiece && kingPiece.color == 'white'){
+            if(this.column+1 <=7 && this.row-1 >=0){
+                if(GameBoardClass.GameBoard[this.row-1][this.column+1] == kingPiece){
                     return 1;
                 }
             }
-            if(this.column-1 >=0 && this.row+1 <=7){
-                if(GameBoardClass.GameBoard[this.row+1][this.column-1] == kingPiece && kingPiece.color == 'white'){
+            if(this.column-1 >=0 && this.row-1 >=0){
+                if(GameBoardClass.GameBoard[this.row-1][this.column-1] == kingPiece){
                     return 1;
                 }
             }
@@ -432,7 +432,6 @@ class Rook extends GamePiece{
        //up
        if(this.row < 7)
        {
-         console.log('Rook row: ', this.row);
          iterRow = ((this.row) + 1);
          iterCol = this.column;
          var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
@@ -884,7 +883,7 @@ class Queen extends GamePiece{
          if(iteratorPiece == kingPiece){return 1;}
        }
        //down
-       else if(this.row > 0)
+       if(this.row > 0)
        {
          iterRow = this.row-1;
          var iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
@@ -899,7 +898,7 @@ class Queen extends GamePiece{
          if(iteratorPiece == kingPiece){return 1;}
        }
        //right
-       else if(this.column < 7)
+       if(this.column < 7)
        {
          iterCol = this.column+1;
          var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
@@ -914,7 +913,7 @@ class Queen extends GamePiece{
          if(iteratorPiece == kingPiece){return 1;}
        }
        //left
-       else if(this.column > 0)
+       if(this.column > 0)
        {
          iterCol = this.column-1;
          var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
@@ -1088,14 +1087,14 @@ class King extends GamePiece{
         //right
         if(this.column+1 <= 7)
         {
-          if(GameBoardClass.GameBoard[this.row][this.column+1].color != this.color){
+          if(GameBoardClass.GameBoard[this.row][this.column+1] == kingPiece){
             return 1;
           }
         }
         //left
         if(this.column-1 >= 0)
         {
-          if(GameBoardClass.GameBoard[this.row][this.column-1].color != this.color){
+          if(GameBoardClass.GameBoard[this.row][this.column-1] == kingPiece){
             return 1;
           }
         }
@@ -1116,6 +1115,10 @@ class NullPiece extends GamePiece{
      */
     getImage(){
         return '';//This might change later, we will see what I want this to be
+    }
+
+    couldAttack(GameBoardClass, kingPiece){
+        return '';
     }
 }
 //here we can define classes for each of the standard pieces and the null piece
