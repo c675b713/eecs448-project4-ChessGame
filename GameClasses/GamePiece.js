@@ -107,37 +107,91 @@ class Pawn extends GamePiece{
      * @memberof Pawn
      * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
      */
-     enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
+     enableValidMovements(GameBoardClass){
         this.disableAllPieces(GameBoardClass);
         GameBoardClass.GameButtons[this.row][this.column].disabled = false;
         GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
         if(this.color == 'white'){
-            if(GameBoardClass.GameBoard[this.row+1][this.column].color == 'null'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+            if(this.row+1 <= 7){
+                if(GameBoardClass.GameBoard[this.row+1][this.column].color == 'null'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+                }
             }
             if(this.row == 1 && GameBoardClass.GameBoard[this.row+2][this.column].color != 'black'){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column]);
             }
-            if(GameBoardClass.GameBoard[this.row+1][this.column+1].color == 'black'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1]);
+            if(this.column+1 <=7 && this.row+1 <=7){
+                if(GameBoardClass.GameBoard[this.row+1][this.column+1].color == 'black'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1]);
+                }
             }
-            if(GameBoardClass.GameBoard[this.row+1][this.column-1].color == 'black'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1]);
+            if(this.column-1 >=0 && this.row+1 <=7){
+                if(GameBoardClass.GameBoard[this.row+1][this.column-1].color == 'black'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1]);
+                }
             }
         }
         if(this.color == 'black'){
-            if(GameBoardClass.GameBoard[this.row-1][this.column].color == 'null'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+            if(this.row-1 >= 0){
+                if(GameBoardClass.GameBoard[this.row-1][this.column].color == 'null'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+                }
             }
             if(this.row == 6 && GameBoardClass.GameBoard[this.row-2][this.column].color != 'white'){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column]);
             }
-            if(GameBoardClass.GameBoard[this.row-1][this.column+1].color == 'white'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1]);
+            if(this.row-1 >= 0 && this.column+1 <= 7){
+                if(GameBoardClass.GameBoard[this.row-1][this.column+1].color == 'white'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1]);
+                }
             }
-            if(GameBoardClass.GameBoard[this.row-1][this.column-1].color == 'white'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
+            if(this.row-1>=0 && this.column-1>=0){
+                if(GameBoardClass.GameBoard[this.row-1][this.column-1].color == 'white'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
+                }
             }
+        }
+    }
+    
+    /**
+     * returns true if king could be attacked by piece, false otherwise
+     * @function couldAttack
+     * @memberOf Pawn
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     * @param kingPiece
+     */
+    couldAttack(GameBoardClass, kingPiece){
+        if(this.color == 'white'){
+            if(this.column+1 <=7 && this.row+1 <=7){
+                if(GameBoardClass.GameBoard[this.row+1][this.column+1] == kingPiece && kingPiece.color == 'black'){
+                    return 1;
+                }
+            }
+            if(this.column-1 >=0 && this.row+1 <=7){
+                if(GameBoardClass.GameBoard[this.row+1][this.column-1] == kingPiece && kingPiece.color == 'black'){
+                    return 1;
+                }
+            }
+            if(this.row == 1 && GameBoardClass.GameBoard[this.row+2][this.column] == kingPiece){
+                return 1;
+            }
+            else {return 0;}
+        }
+        if(this.color == 'black'){
+            if(this.column+1 <=7 && this.row-1 <=7){
+                if(GameBoardClass.GameBoard[this.row-1][this.column+1] == kingPiece && kingPiece.color == 'white'){
+                    return 1;
+                }
+            }
+            if(this.column-1 >=0 && this.row+1 <=7){
+                if(GameBoardClass.GameBoard[this.row+1][this.column-1] == kingPiece && kingPiece.color == 'white'){
+                    return 1;
+                }
+            }
+            if(this.row == 6 && GameBoardClass.GameBoard[this.row-2][this.column] == kingPiece){
+                return 1;
+            }
+            else {return 0;}
         }
     }
 }
@@ -221,11 +275,69 @@ class Knight extends GamePiece{
             }
         }
     }
+
+    /**
+     * returns true if king could be attacked by piece, false otherwise
+     * @function couldAttack
+     * @memberOf Knight
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     * @param kingPiece
+     */
+    couldAttack(GameBoardClass, kingPiece){
+        //up and right
+        if(this.row+2 <= 7 && this.column+1 <= 7){
+            if(GameBoardClass.GameBoard[this.row+2][this.column+1] == kingPiece){
+                return 1;
+            }
+        }
+        if(this.row+1 <= 7 && this.column+2 <= 7){
+            if(GameBoardClass.GameBoard[this.row+1][this.column+2] == kingPiece){
+                return 1;
+            }
+        }
+
+        //down and right
+        if(this.row-1 >= 0 && this.column+2 <= 7){
+            if(GameBoardClass.GameBoard[this.row-1][this.column+2] == kingPiece){
+                return 1;
+            }
+        }
+        if(this.row-2 >= 0 && this.column+1 <= 7){
+            if(GameBoardClass.GameBoard[this.row-2][this.column+1] == kingPiece){
+                return 1;
+            }
+        }
+
+        //up and left
+        if(this.row+1 <= 7 && this.column-2 >= 0){
+            if(GameBoardClass.GameBoard[this.row+1][this.column-2] == kingPiece){
+                return 1;
+            }
+        }
+        if(this.row+2 <= 7 && this.column-1 >= 0 ){
+            if(GameBoardClass.GameBoard[this.row+2][this.column-1] == kingPiece){
+                return 1;
+            }
+        }
+
+        //down and left
+        if(this.row-1 >= 0 && this.column-2 >= 0){
+            if(GameBoardClass.GameBoard[this.row-1][this.column-2] == kingPiece){
+                return 1;
+            }
+        }
+        if(this.row-2 >= 0 && this.column-1 >= 0){
+            if(GameBoardClass.GameBoard[this.row-2][this.column-1] == kingPiece){
+                return 1;
+            }
+        }
+        return 0;
+    }
 }
 
 class Rook extends GamePiece{
     constructor(color){
-        super(color);
+        super(color)
         this.pieceType = 'rook';
     }
 
@@ -305,6 +417,81 @@ class Rook extends GamePiece{
              else {break}
          }
        }
+    }
+
+    /**
+     * returns true if king could be attacked by piece, false otherwise
+     * @function couldAttack
+     * @memberOf Rook
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     * @param kingPiece
+     */
+    couldAttack(GameBoardClass, kingPiece){
+       var iterRow = 0;
+       var iterCol = 0;
+       //up
+       if(this.row < 7)
+       {
+         console.log('Rook row: ', this.row);
+         iterRow = ((this.row) + 1);
+         iterCol = this.column;
+         var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterRow < 7){
+                 iterRow++;
+                 iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+             }
+             else {break;}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       //down
+       if(this.row > 0)
+       {
+         iterRow = this.row-1;
+         var iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterRow > 0){
+                 iterRow--;
+                 iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
+             }
+             else {break;}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       //right
+       if(this.column < 7)
+       {
+         iterCol = this.column+1;
+         var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterCol < 7){
+                 iterCol++;
+                 iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
+             }
+             else {break;}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       //left
+       if(this.column > 0)
+       {
+         iterCol = this.column-1;
+         var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterCol > 0){
+                 iterCol--;
+                 iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
+             }
+             else {break}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       return 0;
     }
 }
 
@@ -388,6 +575,87 @@ class Bishop extends GamePiece{
             }
         }
     }
+
+    /**
+     * returns true if king could be attacked by piece, false otherwise
+     * @function couldAttack
+     * @memberOf Bishop
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     * @param kingPiece
+     */
+         couldAttack(GameBoardClass, kingPiece){
+            var iterRow = 0;
+            var iterCol = 0;
+            //up and to right
+            if(this.row < 7 && this.column < 7)
+            {
+              iterRow = this.row+1;
+              iterCol = this.column+1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color == this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow < 7 && iterCol<7){
+                      iterRow++;
+                      iterCol++;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break;}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            //down and to right
+            if(this.row > 0 && this.column < 7)
+            {
+              iterRow = this.row-1;
+              iterCol = this.column+1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color != this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow > 0 && iterCol<7){
+                      iterRow--;
+                      iterCol++;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break;}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            //up and to left
+            if(this.row < 7 && this.column > 0)
+            {
+              iterRow = this.row+1;
+              iterCol = this.column-1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color != this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow < 7 && iterCol>0){
+                      iterRow++;
+                      iterCol--;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break;}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            //down and to left
+            if(this.row > 0 && this.column > 0)
+            {
+              iterRow = this.row-1;
+              iterCol = this.column-1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color != this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow>0 && iterCol > 0){
+                      iterRow--;
+                      iterCol--;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            return 0;
+         }
 }
 
 class Queen extends GamePiece{
@@ -409,10 +677,10 @@ class Queen extends GamePiece{
             return './img/queen_black.svg';
         }
     }
-        /**
+    /**
      * method that runs when a piece is clicked, figures out what buttons to add the move script to
      * @function enableValidMovements
-     * @memberof Bishop
+     * @memberof Queen
      * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
      */
          enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
@@ -520,6 +788,148 @@ class Queen extends GamePiece{
                 }
             }
          }
+
+    /**
+     * returns true if king could be attacked by piece, false otherwise
+     * @function couldAttack
+     * @memberOf Queen
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     * @param kingPiece
+     */
+    couldAttack(GameBoardClass, kingPiece){
+        var iterRow = 0;
+        var iterCol = 0;
+            //up and to right
+            if(this.row < 7 && this.column < 7)
+            {
+              iterRow = this.row+1;
+              iterCol = this.column+1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color == this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow < 7 && iterCol<7){
+                      iterRow++;
+                      iterCol++;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break;}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            //down and to right
+            if(this.row > 0 && this.column < 7)
+            {
+              iterRow = this.row-1;
+              iterCol = this.column+1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color != this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow > 0 && iterCol<7){
+                      iterRow--;
+                      iterCol++;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break;}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            //up and to left
+            if(this.row < 7 && this.column > 0)
+            {
+              iterRow = this.row+1;
+              iterCol = this.column-1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color != this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow < 7 && iterCol>0){
+                      iterRow++;
+                      iterCol--;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break;}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+            //down and to left
+            if(this.row > 0 && this.column > 0)
+            {
+              iterRow = this.row-1;
+              iterCol = this.column-1;
+              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+              while(iteratorPiece.color != this.color){
+                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iterRow>0 && iterCol > 0){
+                      iterRow--;
+                      iterCol--;
+                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                  }
+                  else {break}
+              }
+              if(iteratorPiece == kingPiece){return 1;}
+            }
+       //up
+       if(this.row < 7)
+       {
+         iterRow = this.row+1;
+         iterCol = this.column;
+         var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterRow < 7){
+                 iterRow++;
+                 iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+             }
+             else {break;}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       //down
+       else if(this.row > 0)
+       {
+         iterRow = this.row-1;
+         var iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterRow > 0){
+                 iterRow--;
+                 iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
+             }
+             else {break;}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       //right
+       else if(this.column < 7)
+       {
+         iterCol = this.column+1;
+         var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterCol < 7){
+                 iterCol++;
+                 iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
+             }
+             else {break;}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       //left
+       else if(this.column > 0)
+       {
+         iterCol = this.column-1;
+         var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
+         while(iteratorPiece.color != this.color){
+             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iterCol > 0){
+                 iterCol--;
+                 iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
+             }
+             else {break}
+         }
+         if(iteratorPiece == kingPiece){return 1;}
+       }
+       return 0;
+    }
 }
 
 class King extends GamePiece{
@@ -544,10 +954,10 @@ class King extends GamePiece{
     /**
      * method that runs when a piece is clicked, figures out what buttons to add the move script to
      * @function enableValidMovements
-     * @memberof Bishop
+     * @memberof King
      * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
      */
-     enableValidMovements(GameBoardClass){//This method will eventually be removed, but is a template for future methods
+     enableValidMovements(GameBoardClass){
         this.disableAllPieces(GameBoardClass);
         GameBoardClass.GameButtons[this.row][this.column].disabled = false;
         GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
@@ -555,20 +965,26 @@ class King extends GamePiece{
         if(this.row+1 <= 7)
         {
           if(GameBoardClass.GameBoard[this.row+1][this.column].color != this.color){
-            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column]) == false){//king cannot move into check
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+            //}
           }
           //...and to the right
           if(this.column+1 <= 7)
           {
             if(GameBoardClass.GameBoard[this.row+1][this.column+1].color != this.color){
-              this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1]);
+                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column+1]) == false){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1]);
+                //}
             }
           }
           //...and to the left
           if(this.column-1 >= 0)
           {
             if(GameBoardClass.GameBoard[this.row+1][this.column-1].color != this.color){
-              this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1]);
+                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column-1]) == false){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1]);
+                //}
             }
           }
         }
@@ -576,20 +992,26 @@ class King extends GamePiece{
         if(this.row-1 >= 0)
         {
           if(GameBoardClass.GameBoard[this.row-1][this.column].color != this.color){
-            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column]) == false){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+            //}
           }
           //...and to the right
           if(this.column+1 <= 7)
           {
             if(GameBoardClass.GameBoard[this.row-1][this.column+1].color != this.color){
-              this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1]);
+                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column+1]) == false){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1]);
+                //}
             }
           }
           //...and to the left
           if(this.column-1 >= 0)
           {
             if(GameBoardClass.GameBoard[this.row-1][this.column-1].color != this.color){
-              this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
+                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column-1]) == false){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
+                //}
             }
           }
         }
@@ -597,17 +1019,88 @@ class King extends GamePiece{
         if(this.column+1 <= 7)
         {
           if(GameBoardClass.GameBoard[this.row][this.column+1].color != this.color){
-            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column+1]);
+            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row][this.column+1]) == false){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column+1]);
+            //}
           }
         }
         //left
         if(this.column-1 >= 0)
         {
           if(GameBoardClass.GameBoard[this.row][this.column-1].color != this.color){
-            this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column-1]);
+            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row][this.column-1]) == false){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column-1]);
+            //}
           }
         }
      }
+
+    /**
+     * returns true if piece could be attacked, false otherwise
+     * @function couldAttack
+     * @memberOf King
+     * @param GameBoardClass GameBoard Object so we can use the GameButton and GameBoard arrays
+     * @param kingPiece
+     */
+    couldAttack(GameBoardClass, kingPiece){
+        //up...
+        if(this.row+1 <= 7)
+        {
+          if(GameBoardClass.GameBoard[this.row+1][this.column] == kingPiece){
+             return 1;
+          }
+          //...and to the right
+          if(this.column+1 <= 7)
+          {
+            if(GameBoardClass.GameBoard[this.row+1][this.column+1] == kingPiece){
+              return 1;
+            }
+          }
+          //...and to the left
+          if(this.column-1 >= 0)
+          {
+            if(GameBoardClass.GameBoard[this.row+1][this.column-1] == kingPiece){
+              return 1;
+            }
+          }
+        }
+        //down
+        if(this.row-1 >= 0)
+        {
+          if(GameBoardClass.GameBoard[this.row-1][this.column] == kingPiece){
+            return 1;
+          }
+          //...and to the right
+          if(this.column+1 <= 7)
+          {
+            if(GameBoardClass.GameBoard[this.row-1][this.column+1] == kingPiece){
+              return 1;
+            }
+          }
+          //...and to the left
+          if(this.column-1 >= 0)
+          {
+            if(GameBoardClass.GameBoard[this.row-1][this.column-1] == kingPiece){
+              return 1;
+            }
+          }
+        }
+        //right
+        if(this.column+1 <= 7)
+        {
+          if(GameBoardClass.GameBoard[this.row][this.column+1].color != this.color){
+            return 1;
+          }
+        }
+        //left
+        if(this.column-1 >= 0)
+        {
+          if(GameBoardClass.GameBoard[this.row][this.column-1].color != this.color){
+            return 1;
+          }
+        }
+        return 0;
+    }
 }
 
 class NullPiece extends GamePiece{
