@@ -470,7 +470,7 @@ class Rook extends GamePiece{
          iterCol = this.column;
          var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterRow < 7){
                  iterRow++;
                  iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
@@ -485,7 +485,7 @@ class Rook extends GamePiece{
          iterRow = this.row-1;
          var iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterRow > 0){
                  iterRow--;
                  iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
@@ -500,7 +500,7 @@ class Rook extends GamePiece{
          iterCol = this.column+1;
          var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterCol < 7){
                  iterCol++;
                  iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
@@ -515,7 +515,7 @@ class Rook extends GamePiece{
          iterCol = this.column-1;
          var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterCol > 0){
                  iterCol--;
                  iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
@@ -626,7 +626,7 @@ class Bishop extends GamePiece{
               iterCol = this.column+1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color == this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow < 7 && iterCol<7){
                       iterRow++;
                       iterCol++;
@@ -643,7 +643,7 @@ class Bishop extends GamePiece{
               iterCol = this.column+1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow > 0 && iterCol<7){
                       iterRow--;
                       iterCol++;
@@ -660,7 +660,7 @@ class Bishop extends GamePiece{
               iterCol = this.column-1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow < 7 && iterCol>0){
                       iterRow++;
                       iterCol--;
@@ -677,7 +677,7 @@ class Bishop extends GamePiece{
               iterCol = this.column-1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow>0 && iterCol > 0){
                       iterRow--;
                       iterCol--;
@@ -839,7 +839,7 @@ class Queen extends GamePiece{
               iterCol = this.column+1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color == this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow < 7 && iterCol<7){
                       iterRow++;
                       iterCol++;
@@ -856,7 +856,7 @@ class Queen extends GamePiece{
               iterCol = this.column+1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow > 0 && iterCol<7){
                       iterRow--;
                       iterCol++;
@@ -873,7 +873,7 @@ class Queen extends GamePiece{
               iterCol = this.column-1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow < 7 && iterCol>0){
                       iterRow++;
                       iterCol--;
@@ -890,7 +890,7 @@ class Queen extends GamePiece{
               iterCol = this.column-1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
               while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow>0 && iterCol > 0){
                       iterRow--;
                       iterCol--;
@@ -907,7 +907,7 @@ class Queen extends GamePiece{
          iterCol = this.column;
          var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterRow < 7){
                  iterRow++;
                  iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
@@ -922,7 +922,7 @@ class Queen extends GamePiece{
          iterRow = this.row-1;
          var iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterRow > 0){
                  iterRow--;
                  iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
@@ -937,7 +937,7 @@ class Queen extends GamePiece{
          iterCol = this.column+1;
          var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterCol < 7){
                  iterCol++;
                  iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
@@ -952,7 +952,7 @@ class Queen extends GamePiece{
          iterCol = this.column-1;
          var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
          while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this)){ break; }
+             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
              if(iterCol > 0){
                  iterCol--;
                  iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
@@ -998,26 +998,26 @@ class King extends GamePiece{
         if(this.row+1 <= 7)
         {
           if(GameBoardClass.GameBoard[this.row+1][this.column].color != this.color){
-            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column]) == false){//king cannot move into check
+            if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column], this.color).length == 0){//king cannot move into check
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
-            //}
+            }
           }
           //...and to the right
           if(this.column+1 <= 7)
           {
             if(GameBoardClass.GameBoard[this.row+1][this.column+1].color != this.color){
-                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column+1]) == false){
+                if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column+1], this.color).length == 0){
                     this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1]);
-                //}
+                }
             }
           }
           //...and to the left
           if(this.column-1 >= 0)
           {
             if(GameBoardClass.GameBoard[this.row+1][this.column-1].color != this.color){
-                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column-1]) == false){
+                if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row+1][this.column-1], this.color).length == 0){
                     this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1]);
-                //}
+                }
             }
           }
         }
@@ -1025,26 +1025,26 @@ class King extends GamePiece{
         if(this.row-1 >= 0)
         {
           if(GameBoardClass.GameBoard[this.row-1][this.column].color != this.color){
-            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column]) == false){
+            if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column], this.color).length == 0){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
-            //}
+            }
           }
           //...and to the right
           if(this.column+1 <= 7)
           {
             if(GameBoardClass.GameBoard[this.row-1][this.column+1].color != this.color){
-                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column+1]) == false){
+                if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column+1], this.color).length == 0){
                     this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1]);
-                //}
+                }
             }
           }
           //...and to the left
           if(this.column-1 >= 0)
           {
             if(GameBoardClass.GameBoard[this.row-1][this.column-1].color != this.color){
-                //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column-1]) == false){
+                if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row-1][this.column-1], this.color).length == 0){
                     this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1]);
-                //}
+                }
             }
           }
         }
@@ -1052,18 +1052,18 @@ class King extends GamePiece{
         if(this.column+1 <= 7)
         {
           if(GameBoardClass.GameBoard[this.row][this.column+1].color != this.color){
-            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row][this.column+1]) == false){
+            if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row][this.column+1], this.color).length == 0){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column+1]);
-            //}
+            }
           }
         }
         //left
         if(this.column-1 >= 0)
         {
           if(GameBoardClass.GameBoard[this.row][this.column-1].color != this.color){
-            //if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row][this.column-1]) == false){
+            if(GameBoardClass.isCheck(GameBoardClass.GameBoard[this.row][this.column-1], this.color).length == 0){
                 this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row][this.column-1]);
-            //}
+            }
           }
         }
         this.castlingCheck(GameBoardClass);
@@ -1213,7 +1213,7 @@ class NullPiece extends GamePiece{
     }
 
     couldAttack(GameBoardClass, kingPiece){
-        return '';
+        return 0;
     }
 }
 //here we can define classes for each of the standard pieces and the null piece

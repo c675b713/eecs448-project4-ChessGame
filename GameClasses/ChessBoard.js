@@ -195,27 +195,22 @@ class GameBoard{
      * @memberof GameBoard
      * @param piece; could be king or a tile the king could move to (in the case of checking for checkmate)
      */
-     isCheck(kingPiece){//first we need to find all possible attackers, then see if they could attack the king
+     isCheck(kingPiece, color){//first we need to find all possible attackers, then see if they could attack the king
         var arr = [];
         var attackBool = 0
         var currentPiece;
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
                 currentPiece = this.GameBoard[i][j];
-                if(currentPiece.color != kingPiece.color && currentPiece.pieceType != 'null'){//if piece is of opposite color
+                if(currentPiece.color != 'null'&&currentPiece.color!=color){//if piece is of opposite color of king
                     attackBool = currentPiece.couldAttack(this, kingPiece);
                     if(attackBool){//if a piece could attack the parameter piece
-                        //console.log("In isCheck, a piece that can attack king: ", this.GameBoard[i][j].pieceType);
-                        //console.log("color of this piece: ", this.GameBoard[i][j].color);
-                        //console.log("Position of this piece: ", currentPiece.row, currentPiece.column)
                         arr.push(currentPiece);
                     }
                 }
-                if(i == 7 && j == 7){
-                    return arr;
-                }
             }
         }
+        return arr;
     }
 
 
@@ -242,13 +237,9 @@ class GameBoard{
             for(var j = 0; j<8; j++){
                 if(this.GameBoard[i][j].color == color){//detecting king of current team's color
                     if(this.GameBoard[i][j].pieceType == 'king'){//tried putting this in first loop but i think this will only work
-                        checkPieces = this.isCheck(this.GameBoard[i][j]);//...if all buttons are enabled/disabled first
+                        checkPieces = this.isCheck(this.GameBoard[i][j], color);//...if all buttons are enabled/disabled first
                         if(checkPieces.length != 0){//if isCheck returns at least one piece the king is in check
                             this.buttonsConfigCheck(checkPieces, this.GameBoard[i][j]);//should disable all buttons of current color which aren't the king and which can't attack a checkPiece
-                            //if(this.isCheckMate(this.GameBoard[i][j])){//checks for checkmate
-                             //   console.log('game over');//ending UI triggered here instead of console.log
-                                //this.GameBoard[i][j].disableAllPieces();//all pieces disabled; option to restart?
-                            //}
                             break;
                         }
                     }
@@ -258,26 +249,42 @@ class GameBoard{
         }
     }
 
-    buttonsConfigCheck(checkPieces, kingPiece){
-        var count = 0;
+    buttonsConfigCheck(checkPieces, kingPiece){//change name
+        kingPiece.disableAllPieces(this);
         var currentPiece;
+        var attackerArr = [];
+        if(this.isCheckMate(kingPiece)){//checks for checkmate
+            console.log('game over');//ending UI triggered here instead of console.log
+            //this.GameBoard[i][j].disableAllPieces();//all pieces disabled; option to restart?
+        }
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
                 currentPiece = this.GameBoard[i][j];
-                if(currentPiece.color == kingPiece.color){
+                //if(currentPiece.color == kingPiece.color){
                     //for(var k = 0; k<checkPieces.length; k++){
-                        //console.log(checkPieces[k].pieceType);
-                       // if(currentPiece.couldAttack(this, checkPieces[k])){
-                       //     count++;
-                      //  }
+                    //    if(currentPiece.couldAttack(this, checkPieces[k])){
+                    //        attackerArr.push(currentPiece);
+                    //        console.log("Number of checkpieces: ", checkPieces.length);
+                    //        console.log("Checkpiece type: ", checkPieces[k].pieceType, "Checkpiece color: ", checkPieces[k].color);
+                    //        console.log("Checkpiece position: ", checkPieces[k].row, checkPieces[k].column);
+                    //        console.log("possible attacker of checkpiece: ", currentPiece.pieceType, "attacker color: ", currentPiece.color);
+                    //        console.log("possible attacker position: ", currentPiece.row, currentPiece.column);
+                    //        break;
+                    //    }
                     //}
-                    if(currentPiece != kingPiece){
+                    //if(attackerArr.indexOf(currentPiece) != -1 || currentPiece == kingPiece){
+                    //    this.enablePieceButton(currentPiece);
+                    //}
+                    //if(attackerArr.indexOf(currentPiece) == -1 && currentPiece != kingPiece){
+                    //    this.disableButton(this.GameButtons[i][j]);
+                    //}
+                    //console.log("Length of attacker array: ", attackerArr.length);
+                    if(currentPiece == kingPiece){
+                        this.enablePieceButton(kingPiece);
+                    }
+                    else{
                         this.disableButton(this.GameButtons[i][j]);
                     }
-                    if(currentPiece == kingPiece){
-                        this.enablePieceButton(currentPiece);
-                    }
-                }
             }
         }
     }
@@ -286,58 +293,75 @@ class GameBoard{
         var count = 0;
         var temp = [];
         if(kingPiece.row+1<=7){
-            temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column]);
-            if(temp.length != 0){//we'll say you can't move your pieces out of the way
+            temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column], kingPiece.color);
+            if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column].color ==kingPiece.color){
+                if(this.GameBoard[kingPiece.row+1][kingPiece.column].couldAttack)
                 count++;
+                //console.log("Count 1: ", count);
             }
             //up
             if(kingPiece.column+1 <= 7){
-                temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column+1]);
-                if(temp.length != 0){
+                temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column+1], kingPiece.color);
+                if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column+1].color ==kingPiece.color){
                     count++;
+                    //console.log("Count 2: ", count);
                 }
                 //...and to right
             }
+            else{count++;}
             if(kingPiece.column-1 >= 0){
-                temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column-1]);
-                if(temp.length != 0){
+                temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column-1], kingPiece.color);
+                if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column-1].color ==kingPiece.color){
                     count++;
+                    //console.log("Count 3: ", count);
                 }
                 //...and to left
             }
+            else{count++;}
         }
+        else{count++;}
         if(kingPiece.row-1>=0){//down
-            temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column]);
-            if(temp.length != 0){
+            temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column], kingPiece.color);
+            if(temp.length != 0 || this.GameBoard[kingPiece.row-1][kingPiece.column].color ==kingPiece.color){
                 count++;
+                //console.log("Count 4: ", count);
             }
             if(kingPiece.column+1 <= 7){
-                temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column+1]);
-                if(temp.length != 0){
+                temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column+1], kingPiece.color);
+                if(temp.length != 0 || this.GameBoard[kingPiece.row-1][kingPiece.column+1].color ==kingPiece.color){
                     count++;
+                    //console.log("Count 5: ", count);
                 }
                 //...and to right
             }
+            else{count++;}
             if(kingPiece.column-1 >= 0){
-                temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column-1]);
-                if(temp.length != 0){
+                temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column-1], kingPiece.color);
+                if(temp.length != 0 || this.GameBoard[kingPiece.row-1][kingPiece.column-1].color ==kingPiece.color){
                     count++;
+                    //console.log("Count 6: ", count);
                 }
                 //...and to left
             }
+            else{count++;}
         }
+        else{count++;}
         if(kingPiece.column+1<=7){
-            temp = this.isCheck(this.GameBoard[kingPiece.row][kingPiece.column+1]);
-            if(temp.length != 0){//we'll say you can't move your pieces out of the way
+            temp = this.isCheck(this.GameBoard[kingPiece.row][kingPiece.column+1], kingPiece.color);
+            if(temp.length != 0 || this.GameBoard[kingPiece.row][kingPiece.column+1].color ==kingPiece.color){//we'll say you can't move your pieces out of the way
                 count++;
+                //console.log("Count 7: ", count);
             }
         }
+        else{count++;}
         if(kingPiece.column-1>=0){
-            temp = this.isCheck(this.GameBoard[kingPiece.row][kingPiece.column-1]);
-            if(temp.length != 0){//we'll say you can't move your pieces out of the way
+            temp = this.isCheck(this.GameBoard[kingPiece.row][kingPiece.column-1], kingPiece.color);
+            if(temp.length != 0 || this.GameBoard[kingPiece.row][kingPiece.column-1].color ==kingPiece.color){//we'll say you can't move your pieces out of the way
                 count++;
+                //console.log("Count 8: ", count);
             }
         }
+        else{count++;}
         if(count == 8){return 1;}
         else {return 0;}
     }
