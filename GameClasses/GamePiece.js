@@ -94,10 +94,10 @@ class Pawn extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/pawn_white.svg';
+            return './img/pawn_white60.svg';
         }
         else{
-            return '../img/pawn_black.svg';
+            return '../img/pawn_black60.svg';
         }
     }
 
@@ -112,13 +112,11 @@ class Pawn extends GamePiece{
         GameBoardClass.GameButtons[this.row][this.column].disabled = false;
         GameBoardClass.GameButtons[this.row][this.column].onclick = (() => {GameBoardClass.startTurn(this.color)});
         if(this.color == 'white'){
-            if(this.row+1 <= 7){
-                if(GameBoardClass.GameBoard[this.row+1][this.column].color == 'null'){
-                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+            if(GameBoardClass.GameBoard[this.row+1][this.column].color == 'null'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column]);
+                if(this.row == 1 && GameBoardClass.GameBoard[this.row+2][this.column].color != 'black'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column]);
                 }
-            }
-            if(this.row == 1 && GameBoardClass.GameBoard[this.row+2][this.column].color != 'black'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row+2][this.column]);
             }
             if(this.column+1 <=7 && this.row+1 <=7){
                 if(GameBoardClass.GameBoard[this.row+1][this.column+1].color == 'black'){
@@ -132,13 +130,11 @@ class Pawn extends GamePiece{
             }
         }
         if(this.color == 'black'){
-            if(this.row-1 >= 0){
-                if(GameBoardClass.GameBoard[this.row-1][this.column].color == 'null'){
-                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+            if(GameBoardClass.GameBoard[this.row-1][this.column].color == 'null'){
+                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column]);
+                if(this.row == 6 && GameBoardClass.GameBoard[this.row-2][this.column].color != 'white'){
+                    this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column]);
                 }
-            }
-            if(this.row == 6 && GameBoardClass.GameBoard[this.row-2][this.column].color != 'white'){
-                this.setMoveFunction(GameBoardClass, GameBoardClass.GameBoard[this.row-2][this.column]);
             }
             if(this.row-1 >= 0 && this.column+1 <= 7){
                 if(GameBoardClass.GameBoard[this.row-1][this.column+1].color == 'white'){
@@ -193,6 +189,44 @@ class Pawn extends GamePiece{
             }
             else {return 0;}
         }
+        this.checkEnPassant(GameBoardClass);
+    }
+    
+    checkEnPassant(GameBoardClass){//I made this a seperate method so we don't have just a ton of conditions in the validMovements method
+        var gameBoard = GameBoardClass.GameBoard;
+        if(this.color == 'white' && this.row == 4){
+            if(gameBoard[this.row][this.column+1].color == 'black' &&gameBoard[this.row][this.column+1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column+1],gameBoard[this.row][this.column+1]);
+            }
+            if(gameBoard[this.row][this.column-1].color == 'black' &&gameBoard[this.row][this.column-1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row+1][this.column-1],gameBoard[this.row][this.column-1]);
+            }
+        }
+        if(this.color == 'black' && this.row == 3){
+            if(gameBoard[this.row][this.column+1].color == 'white' &&gameBoard[this.row][this.column+1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column+1],gameBoard[this.row][this.column+1]);
+            }
+            if(gameBoard[this.row][this.column-1].color == 'white' &&gameBoard[this.row][this.column-1].pieceType == 'pawn'){
+                this.enPassantMove(GameBoardClass, GameBoardClass.GameBoard[this.row-1][this.column-1], gameBoard[this.row][this.column-1]);
+            }
+        }
+    }
+
+    enPassantMove(GameBoardClass, destinationPiece, killedPawn){//
+        var destinationButton = GameBoardClass.GameButtons[destinationPiece.row][destinationPiece.column]
+        destinationButton.disabled = false;
+        destinationButton.onclick = (() =>{
+            GameBoardClass.GameBoard[killedPawn.row][killedPawn.column] = new NullPiece();
+            GameBoardClass.GameBoard[killedPawn.row][killedPawn.column].setLocation(killedPawn.row,killedPawn.column);
+            GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
+            if(this.color == 'white'){
+                GameBoardClass.startTurn('black');
+            }
+            else{
+                GameBoardClass.startTurn('white');
+            }
+
+        });
     }
 }
 
@@ -209,10 +243,10 @@ class Knight extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/knight_white.svg';
+            return './img/knight_white60.svg';
         }
         else{
-            return './img/knight_black.svg';
+            return './img/knight_black60.svg';
         }
     }
 
@@ -348,10 +382,10 @@ class Rook extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/rook_white.svg';
+            return './img/rook_white60.svg';
         }
         else{
-            return './img/rook_black.svg';
+            return './img/rook_black60.svg';
         }
     }
     /**
@@ -507,10 +541,10 @@ class Bishop extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/bishop_white.svg';
+            return './img/bishop_white60.svg';
         }
         else{
-            return './img/bishop_black.svg';
+            return './img/bishop_black60.svg';
         }
     }
 
@@ -670,10 +704,10 @@ class Queen extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/queen_white.svg';
+            return './img/queen_white60.svg';
         }
         else{
-            return './img/queen_black.svg';
+            return './img/queen_black60.svg';
         }
     }
     /**
@@ -944,10 +978,10 @@ class King extends GamePiece{
      */
     getImage(){
         if(this.color == 'white'){
-            return './img/king_white.svg';
+            return './img/king_white60.svg';
         }
         else{
-            return './img/king_black.svg';
+            return './img/king_black60.svg';
         }
     }
     /**
@@ -1032,6 +1066,7 @@ class King extends GamePiece{
             }
           }
         }
+        this.castlingCheck(GameBoardClass);
      }
 
     /**
@@ -1099,6 +1134,66 @@ class King extends GamePiece{
           }
         }
         return 0;
+      
+    castlingCheck(GameBoardClass){
+        if(this.color == 'white' && GameBoardClass.whiteCanCastle){
+            if(GameBoardClass.GameBoard[0][1].pieceType == 'null' && GameBoardClass.GameBoard[0][2].pieceType == 'null' && GameBoardClass.GameBoard[0][3].pieceType == 'null' && GameBoardClass.GameBoard[0][0].pieceType == 'rook'){//white long castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[0][2]);
+            }
+            if(GameBoardClass.GameBoard[0][5].pieceType == 'null' && GameBoardClass.GameBoard[0][6].pieceType == 'null' && GameBoardClass.GameBoard[0][7].pieceType == 'rook'){//white short castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[0][6]);
+            }
+        }
+        if(this.color == 'black' && GameBoardClass.blackCanCastle){
+            if(GameBoardClass.GameBoard[7][1].pieceType == 'null' && GameBoardClass.GameBoard[7][2].pieceType == 'null' && GameBoardClass.GameBoard[7][3].pieceType == 'null' && GameBoardClass.GameBoard[7][0].pieceType == 'rook'){//black long castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[7][2]);
+            }
+            if(GameBoardClass.GameBoard[7][5].pieceType == 'null' && GameBoardClass.GameBoard[7][6].pieceType == 'null' && GameBoardClass.GameBoard[7][7].pieceType == 'rook'){//black short castle
+                this.setCastleMove(GameBoardClass, GameBoardClass.GameBoard[7][6]);
+            }
+        }
+    }
+
+    setCastleMove(GameBoardClass, destinationPiece){
+        var destinationButton = GameBoardClass.GameButtons[destinationPiece.row][destinationPiece.column];
+        destinationButton.disabled = false;
+        destinationButton.onclick = (() =>{
+            if(this.color == 'white'){
+                if(destinationPiece.column == 2){//Long Castle
+                    GameBoardClass.GameBoard[0][0] = new NullPiece();
+                    GameBoardClass.GameBoard[0][0].setLocation(0,0);
+                    GameBoardClass.GameBoard[0][3] = new Rook('white');
+                    GameBoardClass.GameBoard[0][3].setLocation(0,3);
+                }
+                if(destinationPiece.column == 6){//short Castle
+                    GameBoardClass.GameBoard[0][7] = new NullPiece();
+                    GameBoardClass.GameBoard[0][7].setLocation(0,7);
+                    GameBoardClass.GameBoard[0][5] = new Rook('white');
+                    GameBoardClass.GameBoard[0][5].setLocation(0,5);
+                }
+            }
+            else{
+                if(destinationPiece.column == 2){//Long Castle
+                    GameBoardClass.GameBoard[7][0] = new NullPiece();
+                    GameBoardClass.GameBoard[7][0].setLocation(7,0);
+                    GameBoardClass.GameBoard[7][3] = new Rook('black');
+                    GameBoardClass.GameBoard[7][3].setLocation(7,3);
+                }
+                if(destinationPiece.column == 6){//short Castle
+                    GameBoardClass.GameBoard[7][7] = new NullPiece();
+                    GameBoardClass.GameBoard[7][7].setLocation(7,7);
+                    GameBoardClass.GameBoard[7][5] = new Rook('black');
+                    GameBoardClass.GameBoard[7][5].setLocation(7,5);
+                }
+            }
+            GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
+            if(this.color == 'white'){
+                GameBoardClass.startTurn('black');
+            }
+            else{
+                GameBoardClass.startTurn('white');
+            }
+        });
     }
 }
 

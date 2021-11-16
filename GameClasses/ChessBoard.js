@@ -9,6 +9,8 @@ class GameBoard{
         this.reloadBoard();
         this.whiteCapturedPieces = [];
         this.blackCapturedPieces = [];
+        this.whiteCanCastle = true;
+        this.blackCanCastle = true;
         this.startTurn('white');
     }
     /**
@@ -165,24 +167,26 @@ class GameBoard{
         //This method will take update the icon of every button in GameButtons based on its corresponding entry in GameBoard
         for(var i = 0; i<8; i++){//row
             for(var j = 0; j<8; j++){//col
-				      if(this.GameBoard[i][j].pieceType == 'pawn'){
-					      if(i == 7 && this.GameBoard[i][j].color == 'white'){
-						       this.GameBoard[i][j] = new Queen('white');
-						       this.GameBoard[i][j].setLocation(i, j);
-					        }
-				      	if(i == 0 && this.GameBoard[i][j].color == 'black'){
-						       this.GameBoard[i][j] = new Queen('black');
-						       this.GameBoard[i][j].setLocation(i, j);
-			        		}
-		      		}
-			      	if(this.GameBoard[i][j].color == 'white' || this.GameBoard[i][j].color == 'black'){
-					      this.GameButtons[i][j].innerHTML = "<img src="+this.GameBoard[i][j].getImage() + ">";
-			      	}
-			    	else{
+                if(this.GameBoard[i][j].pieceType == 'pawn'){
+                    if(i == 7 && this.GameBoard[i][j].color == 'white'){
+                        this.GameBoard[i][j] = new Queen('white');
+                        this.GameBoard[i][j].setLocation(i, j);
+                    }
+                    if(i == 0 && this.GameBoard[i][j].color == 'black'){
+                        this.GameBoard[i][j] = new Queen('black');
+                        this.GameBoard[i][j].setLocation(i, j);
+                    }
+                }
+                if(this.GameBoard[i][j].color == 'white' || this.GameBoard[i][j].color == 'black'){
+                    this.GameButtons[i][j].innerHTML = "<img src="+this.GameBoard[i][j].getImage() + ">";
+                }
+                else{
                     this.GameButtons[i][j].innerHTML = "";
                 }
             }
         }
+        if(this.GameBoard[0][4].pieceType != 'king'){this.whiteCanCastle = false;}
+        if(this.GameBoard[7][4].pieceType != 'king'){this.whiteCanCastle = false;}
     }
 
     /**
@@ -218,7 +222,6 @@ class GameBoard{
      */
     startTurn(color){
         //enable all the buttons of the current color
-        var self = this;
         var checkPieces = [];
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
