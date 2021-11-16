@@ -24,10 +24,10 @@
                 <!-- Player Turn -->
                 <h2>Player Turn</h2>
                 <div class="playerturn" style="--aspect-ratio:2/1;">
-                    <div class="white">
+                    <div class="white-turn">
                         White
                     </div>
-                    <div class="black">
+                    <div class="black-turn">
                         Black
                     </div>
                 </div>
@@ -35,8 +35,13 @@
                 <!-- Timer -->
                 <h2>Timer</h2>
                 <div class="timer">
-                    <div id="display">
+                    <div class="timer-container">
+                    <div id="display-white">
                        00:00
+                    </div>
+                    <div id="display-black">
+                        00:00
+                     </div>
                     </div>
                     <button id="time-buttons" class="start-time">
                         Start
@@ -49,6 +54,7 @@
                     </button>
                     
                 </div>
+                
             </div>
             
         </nav>
@@ -139,7 +145,7 @@
             <div class="aside-container">
                 <div class="gameOptions">
                     <h3>Game Options</h3>
-                        <button class="start-game"> Start Game</button>
+                        <button class="start-game" onclick="chessBoard.setUpPieces()"> Start Game</button>
                         <button class="end-turn">End Game</button>
                         <button class="new-game">New Game</button>
                     
