@@ -255,10 +255,26 @@ aside{
    
 } 
 .piece-container{
-    width: 95%;
-    height: 80%;
+    width: 100%;
+    height: 90%;
     background-color: var(--clr-alice-blue);
+}
+.black-pieces{
+    width: 100%;
+    height: 50%;
+    background-color: var(--clr-main);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     
+}
+.white-pieces{
+    width: 100%;
+    height: 50%;
+    background-color: var(--clr-dark);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
 }
 /* ############################## */
 /* ======================================== */
