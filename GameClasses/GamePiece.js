@@ -1134,7 +1134,7 @@ class King extends GamePiece{
           }
         }
         return 0;
-      
+    }  
     castlingCheck(GameBoardClass){
         if(this.color == 'white' && GameBoardClass.whiteCanCastle){
             if(GameBoardClass.GameBoard[0][1].pieceType == 'null' && GameBoardClass.GameBoard[0][2].pieceType == 'null' && GameBoardClass.GameBoard[0][3].pieceType == 'null' && GameBoardClass.GameBoard[0][0].pieceType == 'rook'){//white long castle
