@@ -197,6 +197,20 @@ class GameBoard{
      * @param color current player, 'white' or 'black' 
      */
     startTurn(color){
+        let whitet = document.querySelector(".white-turn");
+        let blackt = document.querySelector(".black-turn");
+        let colR = "#BD1E1E";
+        let colW = "#E7EBEE";
+
+        if(color == 'white'){
+            whitet.style.outlineColor = colR;
+            blackt.style.outlineColor = colW;
+           
+        }
+        else if(color == 'black'){
+            blackt.style.outlineColor = colR;
+            whitet.style.outlineColor = colW;
+        }
         //enable all the buttons of the current color
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
