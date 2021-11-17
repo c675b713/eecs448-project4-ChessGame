@@ -4,11 +4,11 @@ class GameBoard{
     constructor(_){
         this.GameButtons = [];
         this.GameBoard = [];
+        this.whiteCapturedPieces = [];
+        this.blackCapturedPieces = [];
         this.establishGameButtons();
         this.setUpPieces();
         this.reloadBoard();
-        this.whiteCapturedPieces = [];
-        this.blackCapturedPieces = [];
         this.whiteCanCastle = true;
         this.blackCanCastle = true;
         this.startTurn('white');
@@ -187,6 +187,35 @@ class GameBoard{
         }
         if(this.GameBoard[0][4].pieceType != 'king'){this.whiteCanCastle = false;}
         if(this.GameBoard[7][4].pieceType != 'king'){this.whiteCanCastle = false;}
+
+        //updates captured pieces
+        for(var i=0; i< this.whiteCapturedPieces.length; i++){
+            //gets image of current piece
+            var pieceImg = this.whiteCapturedPieces[i].getImage();  
+            //create new div element   
+            var captPieceDiv = document.createElement("div");
+            //add img src to new div
+            captPieceDiv.innerHTML = "<img src="+pieceImg+">";
+            //div container that will hold captPieceDiv
+            var parentDiv = document.getElementById("white-capt-pieces");
+            //add img to div
+            parentDiv.appendChild(captPieceDiv);
+            this.whiteCapturedPieces.pop();
+    
+        }
+        for(var i=0; i< this.blackCapturedPieces.length; i++){
+            //gets image of current piece
+            var pieceImg = this.blackCapturedPieces[i].getImage();  
+            //create new div element   
+            var captPieceDiv = document.createElement("div");
+            //add img src to new div
+            captPieceDiv.innerHTML = "<img src="+pieceImg+">";
+            //div container that will hold captPieceDiv
+            var parentDiv = document.getElementById("black-capt-pieces");
+            //add img to div
+            parentDiv.appendChild(captPieceDiv);
+            this.blackCapturedPieces.pop();
+        }
     }
 
     /**
@@ -407,4 +436,4 @@ class GameBoard{
         }
     }
 }
-gameboard = new GameBoard();
+

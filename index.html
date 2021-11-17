@@ -147,8 +147,8 @@
                     <h3>Game Options</h3>
                         <button class="start-game"> Start Game</button>
                         
-                        <button class="new-game">New Game</button>
-                    
+                        <button class="new-game" onclick="window.location.reload()">New Game</button>
+                        
                 </div>
             
 
@@ -156,13 +156,11 @@
                 <div class="captured-pieces">
                    <h3>Captured Pieces </h3>
                     <div class="piece-container">
-                        <div class="white-pieces">
+                        <div class="white-pieces" id="white-capt-pieces">
                             
                         </div>
-                        <div class="black-pieces">
-                            <script>
-
-                            </script>
+                        <div class="black-pieces" id="black-capt-pieces">
+                            
                         </div>
 
                     </div>
