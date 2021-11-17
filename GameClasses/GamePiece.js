@@ -147,6 +147,7 @@ class Pawn extends GamePiece{
                 }
             }
         }
+        this.checkEnPassant(GameBoardClass);
     }
     
     /**
@@ -218,11 +219,19 @@ class Pawn extends GamePiece{
         destinationButton.onclick = (() =>{
             GameBoardClass.GameBoard[killedPawn.row][killedPawn.column] = new NullPiece();
             GameBoardClass.GameBoard[killedPawn.row][killedPawn.column].setLocation(killedPawn.row,killedPawn.column);
+            if(this.color == 'white'){
+                GameBoardClass.whiteCapturedPieces.push(new Pawn('black'));
+            }
+            else{
+                GameBoardClass.blackCapturedPieces.push(new Pawn('white'));
+            }
             GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
             if(this.color == 'white'){
+                GameBoardClass.whiteCapturedPieces.push(new Pawn('black'));
                 GameBoardClass.startTurn('black');
             }
             else{
+                GameBoardClass.blackCapturedPieces.push(new Pawn('white'));
                 GameBoardClass.startTurn('white');
             }
 
