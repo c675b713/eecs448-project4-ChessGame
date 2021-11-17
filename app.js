@@ -1,12 +1,17 @@
 
-import {loadPieces} from './gameService/loadPieces.gameService.js'
+import {loadPieces} from './gameService/loadPieces.gameService.js';
+
 //import {GameBoard} from '/GameClasses/ChessBoard.js'
 
 addEventListener('DOMContentLoaded', _ => {
-    loadPieces.loadPieces()
+    loadPieces.loadPieces();
+    var gameboard = new GameBoard();
 })
 
 
-function newG() {
-    this.GameBoard.setUpPieces();
-}
+
+
+
+
+
+
