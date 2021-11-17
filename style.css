@@ -173,11 +173,17 @@ nav{
     justify-content: center;
 
 }
-#display{
+.timer-container{
+    display: inline-flex;
+    
+
+}
+
+#display-white, #display-black{
     width: 100%;
-    font-size: 48px;
+    font-size: 40px;
     text-align: center;
-    margin: 0px auto;
+    padding: 10px;
 }
  #start{
     text-align: center;
@@ -299,6 +305,60 @@ footer h3{
     color: var(--clr-alice-blue);
 }
 
+/* ############# Modal Popup ############ */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    border: 1px solid black;
+    border-radius: 5px;
+    z-index: 10;
+    background-color: silver;
+    width: 500px;
+    max-width: 75%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
 
 /* Scaling */
 /*
