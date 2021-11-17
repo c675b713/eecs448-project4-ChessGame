@@ -253,7 +253,11 @@ class GameBoard{
                     if(this.GameBoard[i][j].pieceType == 'king'){//tried putting this in first loop but i think this will only work
                         checkPieces = this.isCheck(this.GameBoard[i][j], color);//...if all buttons are enabled/disabled first
                         if(checkPieces.length != 0){//if isCheck returns at least one piece the king is in check
-                            this.buttonsConfigCheck(checkPieces, this.GameBoard[i][j]);//should disable all buttons of current color which aren't the king and which can't attack a checkPiece
+                            this.enableKingOnly(this.GameBoard[i][j]);
+                            if(this.isCheckMate(this.GameBoard[i][j])){//checks for checkmate
+                                console.log('game over');//ending UI triggered here instead of console.log
+                                this.triggerEnd(this.GameBoard[i][j]);
+                            }
                             break;
                         }
                     }
@@ -263,36 +267,18 @@ class GameBoard{
         }
     }
 
-    buttonsConfigCheck(checkPieces, kingPiece){//change name
+    /**
+     * disables all buttons except king; is only called when king is in check
+     * @function enableKingOnly
+     * @memberof GameBoard
+     * @param kingPiece (current player's king)
+     */
+    enableKingOnly(kingPiece){
         kingPiece.disableAllPieces(this);
         var currentPiece;
-        var attackerArr = [];
-        if(this.isCheckMate(kingPiece)){//checks for checkmate
-            console.log('game over');//ending UI triggered here instead of console.log
-            //this.GameBoard[i][j].disableAllPieces();//all pieces disabled; option to restart?
-        }
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
                 currentPiece = this.GameBoard[i][j];
-                //if(currentPiece.color == kingPiece.color){
-                    //for(var k = 0; k<checkPieces.length; k++){
-                    //    if(currentPiece.couldAttack(this, checkPieces[k])){
-                    //        attackerArr.push(currentPiece);
-                    //        console.log("Number of checkpieces: ", checkPieces.length);
-                    //        console.log("Checkpiece type: ", checkPieces[k].pieceType, "Checkpiece color: ", checkPieces[k].color);
-                    //        console.log("Checkpiece position: ", checkPieces[k].row, checkPieces[k].column);
-                    //        console.log("possible attacker of checkpiece: ", currentPiece.pieceType, "attacker color: ", currentPiece.color);
-                    //        console.log("possible attacker position: ", currentPiece.row, currentPiece.column);
-                    //        break;
-                    //    }
-                    //}
-                    //if(attackerArr.indexOf(currentPiece) != -1 || currentPiece == kingPiece){
-                    //    this.enablePieceButton(currentPiece);
-                    //}
-                    //if(attackerArr.indexOf(currentPiece) == -1 && currentPiece != kingPiece){
-                    //    this.disableButton(this.GameButtons[i][j]);
-                    //}
-                    //console.log("Length of attacker array: ", attackerArr.length);
                     if(currentPiece == kingPiece){
                         this.enablePieceButton(kingPiece);
                     }
@@ -303,6 +289,12 @@ class GameBoard{
         }
     }
 
+    /**
+     * Checks if the king has anywhere it can go when in check. If it doesn't, returns true. Otherwise returns false
+     * @function isCheckMate
+     * @memberof GameBoard
+     * @param kingPiece (king of current color) 
+     */
     isCheckMate(kingPiece){
         var count = 0;
         var temp = [];
@@ -311,14 +303,12 @@ class GameBoard{
             if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column].color ==kingPiece.color){
                 if(this.GameBoard[kingPiece.row+1][kingPiece.column].couldAttack)
                 count++;
-                //console.log("Count 1: ", count);
             }
             //up
             if(kingPiece.column+1 <= 7){
                 temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column+1], kingPiece.color);
                 if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column+1].color ==kingPiece.color){
                     count++;
-                    //console.log("Count 2: ", count);
                 }
                 //...and to right
             }
@@ -327,7 +317,6 @@ class GameBoard{
                 temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column-1], kingPiece.color);
                 if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column-1].color ==kingPiece.color){
                     count++;
-                    //console.log("Count 3: ", count);
                 }
                 //...and to left
             }
@@ -338,13 +327,11 @@ class GameBoard{
             temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column], kingPiece.color);
             if(temp.length != 0 || this.GameBoard[kingPiece.row-1][kingPiece.column].color ==kingPiece.color){
                 count++;
-                //console.log("Count 4: ", count);
             }
             if(kingPiece.column+1 <= 7){
                 temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column+1], kingPiece.color);
                 if(temp.length != 0 || this.GameBoard[kingPiece.row-1][kingPiece.column+1].color ==kingPiece.color){
                     count++;
-                    //console.log("Count 5: ", count);
                 }
                 //...and to right
             }
@@ -353,7 +340,6 @@ class GameBoard{
                 temp = this.isCheck(this.GameBoard[kingPiece.row-1][kingPiece.column-1], kingPiece.color);
                 if(temp.length != 0 || this.GameBoard[kingPiece.row-1][kingPiece.column-1].color ==kingPiece.color){
                     count++;
-                    //console.log("Count 6: ", count);
                 }
                 //...and to left
             }
@@ -362,22 +348,52 @@ class GameBoard{
         else{count++;}
         if(kingPiece.column+1<=7){
             temp = this.isCheck(this.GameBoard[kingPiece.row][kingPiece.column+1], kingPiece.color);
-            if(temp.length != 0 || this.GameBoard[kingPiece.row][kingPiece.column+1].color ==kingPiece.color){//we'll say you can't move your pieces out of the way
+            if(temp.length != 0 || this.GameBoard[kingPiece.row][kingPiece.column+1].color ==kingPiece.color){
                 count++;
-                //console.log("Count 7: ", count);
             }
         }
         else{count++;}
         if(kingPiece.column-1>=0){
             temp = this.isCheck(this.GameBoard[kingPiece.row][kingPiece.column-1], kingPiece.color);
-            if(temp.length != 0 || this.GameBoard[kingPiece.row][kingPiece.column-1].color ==kingPiece.color){//we'll say you can't move your pieces out of the way
+            if(temp.length != 0 || this.GameBoard[kingPiece.row][kingPiece.column-1].color ==kingPiece.color){
                 count++;
-                //console.log("Count 8: ", count);
             }
         }
         else{count++;}
         if(count == 8){return 1;}
         else {return 0;}
+    }
+
+    /**
+     * triggers endgame UI
+     * @function triggerEnd
+     * @memberof GameBoard
+     * @param kingPiece
+     */
+    triggerEnd(kingPiece){
+        var overlay = document.getElementById('overlay');
+        if(kingPiece.color == 'white'){
+            var modal = document.getElementById("black-wins");
+            var blackWinsButton = document.querySelector('[data-close-black]');
+            modal.classList.add('active');
+            overlay.classList.add('active');
+            blackWinsButton.addEventListener('click', () => {
+                modal = blackWinsButton.closest('.modal');
+                modal.classList.remove('active');
+                overlay.classList.remove('active');
+            })
+        }
+        if(kingPiece.color == 'black'){
+            var modal = document.getElementById("white-wins");
+            var whiteWinsButton = document.querySelector('[data-close-white]');
+            modal.classList.add('active');
+            overlay.classList.add('active');
+            whiteWinsButton.addEventListener('click', () => {
+                modal = whiteWinsButton.closest('.modal');
+                modal.classList.remove('active');
+                overlay.classList.remove('active');
+            })
+        }
     }
 }
 gameboard = new GameBoard();

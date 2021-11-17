@@ -847,7 +847,9 @@ class Queen extends GamePiece{
                   }
                   else {break;}
               }
-              if(iteratorPiece == kingPiece){return 1;}
+              if(iteratorPiece == kingPiece){
+                  return 1;
+                }
             }
             //down and to right
             if(this.row > 0 && this.column < 7)
