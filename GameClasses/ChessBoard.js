@@ -225,7 +225,7 @@ class GameBoard{
      * @param piece; could be king or a tile the king could move to (in the case of checking for checkmate)
      */
      isCheck(kingPiece, color){//first we need to find all possible attackers, then see if they could attack the king
-        console.log("isCheck is at least being called");
+        //console.log("isCheck is at least being called");
         var arr = [];
         var attackBool = 0
         var currentPiece;
@@ -233,11 +233,11 @@ class GameBoard{
             for(var j = 0; j<8; j++){
                 currentPiece = this.GameBoard[i][j];
                 if(currentPiece.pieceType == 'queen'){
-                    console.log("Queen is at least being iterated over");
+                    //console.log("Queen is at least being iterated over");
                 }
                 if(currentPiece.color!=color){
                     if(currentPiece.pieceType == 'queen'){
-                        console.log("Queen is at least being found");
+                        //console.log("Queen is at least being found");
                     }
                     attackBool = currentPiece.couldAttack(this, kingPiece);
                     if(attackBool){//if a piece could attack the parameter piece
