@@ -114,7 +114,10 @@ class GameBoard{
         this.GameButtons[square.row][square.column].disabled = false;
         this.GameButtons[square.row][square.column].onclick = (() => {
             this.GameBoard[square.row][square.column].enableValidMovements(this);
+            var toBeOutlined = document.getElementById("");
+            
         });
+        
     }
 
     /**
@@ -188,7 +191,7 @@ class GameBoard{
         if(this.GameBoard[0][4].pieceType != 'king'){this.whiteCanCastle = false;}
         if(this.GameBoard[7][4].pieceType != 'king'){this.whiteCanCastle = false;}
 
-        //updates captured pieces
+        //updates whites captured pieces
         for(var i=0; i< this.whiteCapturedPieces.length; i++){
             //gets image of current piece
             var pieceImg = this.whiteCapturedPieces[i].getImage();  
@@ -200,9 +203,11 @@ class GameBoard{
             var parentDiv = document.getElementById("white-capt-pieces");
             //add img to div
             parentDiv.appendChild(captPieceDiv);
+            //pop off of array so captured pieces dont appear twice
             this.whiteCapturedPieces.pop();
     
         }
+        //updates blacks captured pieces
         for(var i=0; i< this.blackCapturedPieces.length; i++){
             //gets image of current piece
             var pieceImg = this.blackCapturedPieces[i].getImage();  
@@ -214,6 +219,7 @@ class GameBoard{
             var parentDiv = document.getElementById("black-capt-pieces");
             //add img to div
             parentDiv.appendChild(captPieceDiv);
+            //pop off of array so captured pieces dont appear twice
             this.blackCapturedPieces.pop();
         }
     }
