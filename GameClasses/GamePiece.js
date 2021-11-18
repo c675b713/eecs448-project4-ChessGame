@@ -634,7 +634,7 @@ class Bishop extends GamePiece{
               iterRow = this.row+1;
               iterCol = this.column+1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-              while(iteratorPiece.color == this.color){
+              while(iteratorPiece.color != this.color){
                   if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow < 7 && iterCol<7){
                       iterRow++;
