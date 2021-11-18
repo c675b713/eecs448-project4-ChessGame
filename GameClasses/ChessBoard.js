@@ -354,7 +354,7 @@ class GameBoard{
                 //console.log("Count 2: ", count);
             }
         }
-        else{count;}
+        else{count++;}
         if(kingPiece.row+1 <= 7 && kingPiece.column-1 >= 0){
             temp = this.isCheck(this.GameBoard[kingPiece.row+1][kingPiece.column-1], kingPiece.color);
             if(temp.length != 0 || this.GameBoard[kingPiece.row+1][kingPiece.column-1].color ==kingPiece.color){
