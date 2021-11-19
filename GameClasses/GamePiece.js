@@ -147,6 +147,7 @@ class Pawn extends GamePiece{
                 }
             }
         }
+        this.checkEnPassant(GameBoardClass);
     }
     
     /**
@@ -218,11 +219,19 @@ class Pawn extends GamePiece{
         destinationButton.onclick = (() =>{
             GameBoardClass.GameBoard[killedPawn.row][killedPawn.column] = new NullPiece();
             GameBoardClass.GameBoard[killedPawn.row][killedPawn.column].setLocation(killedPawn.row,killedPawn.column);
+            if(this.color == 'white'){
+                GameBoardClass.whiteCapturedPieces.push(new Pawn('black'));
+            }
+            else{
+                GameBoardClass.blackCapturedPieces.push(new Pawn('white'));
+            }
             GameBoardClass.movePiece(GameBoardClass.GameBoard[this.row][this.column], destinationPiece);
             if(this.color == 'white'){
+                GameBoardClass.whiteCapturedPieces.push(new Pawn('black'));
                 GameBoardClass.startTurn('black');
             }
             else{
+                GameBoardClass.blackCapturedPieces.push(new Pawn('white'));
                 GameBoardClass.startTurn('white');
             }
 
@@ -625,7 +634,7 @@ class Bishop extends GamePiece{
               iterRow = this.row+1;
               iterCol = this.column+1;
               var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-              while(iteratorPiece.color == this.color){
+              while(iteratorPiece.color != this.color){
                   if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                   if(iterRow < 7 && iterCol<7){
                       iterRow++;
@@ -830,140 +839,142 @@ class Queen extends GamePiece{
      * @param kingPiece
      */
     couldAttack(GameBoardClass, kingPiece){
+        console.log("Queen couldAttack triggered");
         var iterRow = 0;
         var iterCol = 0;
-            //up and to right
-            if(this.row < 7 && this.column < 7)
-            {
-              iterRow = this.row+1;
-              iterCol = this.column+1;
-              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-              while(iteratorPiece.color == this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-                  if(iterRow < 7 && iterCol<7){
-                      iterRow++;
-                      iterCol++;
-                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-                  }
-                  else {break;}
-              }
-              if(iteratorPiece == kingPiece){
-                  return 1;
+        //up and to right
+        if(this.row < 7 && this.column < 7)
+        {
+            iterRow = this.row+1;
+            iterCol = this.column+1;
+            var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+            while(iteratorPiece.color == this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterRow < 7 && iterCol<7){
+                    iterRow++;
+                    iterCol++;
+                    iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
                 }
+                else {break;}
             }
-            //down and to right
-            if(this.row > 0 && this.column < 7)
-            {
-              iterRow = this.row-1;
-              iterCol = this.column+1;
-              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-              while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-                  if(iterRow > 0 && iterCol<7){
-                      iterRow--;
-                      iterCol++;
-                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-                  }
-                  else {break;}
-              }
-              if(iteratorPiece == kingPiece){return 1;}
+            if(iteratorPiece == kingPiece){
+                return 1;
             }
-            //up and to left
-            if(this.row < 7 && this.column > 0)
-            {
-              iterRow = this.row+1;
-              iterCol = this.column-1;
-              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-              while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-                  if(iterRow < 7 && iterCol>0){
-                      iterRow++;
-                      iterCol--;
-                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-                  }
-                  else {break;}
-              }
-              if(iteratorPiece == kingPiece){return 1;}
+        }
+        //down and to right
+        if(this.row > 0 && this.column < 7)
+        {
+            iterRow = this.row-1;
+            iterCol = this.column+1;
+            var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterRow > 0 && iterCol<7){
+                    iterRow--;
+                    iterCol++;
+                    iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                }
+                else {break;}
             }
-            //down and to left
-            if(this.row > 0 && this.column > 0)
-            {
-              iterRow = this.row-1;
-              iterCol = this.column-1;
-              var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-              while(iteratorPiece.color != this.color){
-                  if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-                  if(iterRow>0 && iterCol > 0){
-                      iterRow--;
-                      iterCol--;
-                      iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-                  }
-                  else {break}
-              }
-              if(iteratorPiece == kingPiece){return 1;}
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        //up and to left
+        if(this.row < 7 && this.column > 0)
+        {
+            iterRow = this.row+1;
+            iterCol = this.column-1;
+            var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterRow < 7 && iterCol>0){
+                    iterRow++;
+                    iterCol--;
+                    iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                }
+                else {break;}
             }
-       //up
-       if(this.row < 7)
-       {
-         iterRow = this.row+1;
-         iterCol = this.column;
-         var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-         while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-             if(iterRow < 7){
-                 iterRow++;
-                 iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-             }
-             else {break;}
-         }
-         if(iteratorPiece == kingPiece){return 1;}
-       }
-       //down
-       if(this.row > 0)
-       {
-         iterRow = this.row-1;
-         var iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
-         while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-             if(iterRow > 0){
-                 iterRow--;
-                 iteratorPiece = GameBoardClass.GameBoard[iterRow][this.column];
-             }
-             else {break;}
-         }
-         if(iteratorPiece == kingPiece){return 1;}
-       }
-       //right
-       if(this.column < 7)
-       {
-         iterCol = this.column+1;
-         var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
-         while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-             if(iterCol < 7){
-                 iterCol++;
-                 iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
-             }
-             else {break;}
-         }
-         if(iteratorPiece == kingPiece){return 1;}
-       }
-       //left
-       if(this.column > 0)
-       {
-         iterCol = this.column-1;
-         var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
-         while(iteratorPiece.color != this.color){
-             if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
-             if(iterCol > 0){
-                 iterCol--;
-                 iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
-             }
-             else {break}
-         }
-         if(iteratorPiece == kingPiece){return 1;}
-       }
-       return 0;
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        //down and to left
+        if(this.row > 0 && this.column > 0)
+        {
+            iterRow = this.row-1;
+            iterCol = this.column-1;
+            var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterRow>0 && iterCol > 0){
+                    iterRow--;
+                    iterCol--;
+                    iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                }
+                else {break;}
+            }
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        //up
+        if(this.row < 7)
+        {
+            iterRow = this.row+1;
+            iterCol = this.column;
+            var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterRow < 7){
+                    iterRow++;
+                    iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                }
+                else {break;}
+            }
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        //down
+        if(this.row > 0)
+        {
+            iterRow = this.row-1;
+            iterCol = this.column;
+            var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterRow > 0){
+                    iterRow--;
+                    iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
+                }
+                else {break;}
+            }
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        //right
+        if(this.column < 7)
+        {
+            iterCol = this.column+1;
+            var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterCol < 7){
+                    iterCol++;
+                    iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
+                }
+                else {break;}
+            }
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        //left
+        if(this.column > 0)
+        {
+            iterCol = this.column-1;
+            var iteratorPiece = GameBoardClass.GameBoard[this.row][iterCol];
+            while(iteratorPiece.color != this.color){
+                if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
+                if(iterCol > 0){
+                    iterCol--;
+                    iteratorPiece = GameBoardClass.GameBoard[iteratorPiece.row][iterCol];
+                }
+                else {break}
+            }
+            if(iteratorPiece == kingPiece){return 1;}
+        }
+        return 0;
     }
 }
 
