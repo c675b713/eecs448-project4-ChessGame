@@ -172,7 +172,7 @@ class Pawn extends GamePiece{
             if(this.row == 1 && GameBoardClass.GameBoard[this.row+2][this.column] == kingPiece){
                 return 1;
             }
-            else {return 0;}
+            return 0;
         }
         if(this.color == 'black'){
             if(this.column+1 <=7 && this.row-1 >=0){
@@ -188,7 +188,7 @@ class Pawn extends GamePiece{
             if(this.row == 6 && GameBoardClass.GameBoard[this.row-2][this.column] == kingPiece){
                 return 1;
             }
-            else {return 0;}
+            return 0;
         }
         this.checkEnPassant(GameBoardClass);
     }
@@ -839,7 +839,6 @@ class Queen extends GamePiece{
      * @param kingPiece
      */
     couldAttack(GameBoardClass, kingPiece){
-        console.log("Queen couldAttack triggered");
         var iterRow = 0;
         var iterCol = 0;
         //up and to right
@@ -848,7 +847,7 @@ class Queen extends GamePiece{
             iterRow = this.row+1;
             iterCol = this.column+1;
             var iteratorPiece = GameBoardClass.GameBoard[iterRow][iterCol];
-            while(iteratorPiece.color == this.color){
+            while(iteratorPiece.color != this.color){
                 if(iteratorPiece.color == this.getOppositeColor(this) || iteratorPiece == kingPiece){ break; }
                 if(iterRow < 7 && iterCol<7){
                     iterRow++;
