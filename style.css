@@ -84,12 +84,21 @@ section{
     padding-top: 5%;
     width: 60px;
     height: 60px;
+    color: #BD1E1E;
+    
 }
 .square-grid.white-Box {
     background: white;
+    outline: 2px solid;
+    outline-offset: -5px;
+    outline-color: white;
 }
 .square-grid.black-Box{
     background: gray;
+    outline: 2px solid;
+    outline-offset: -5px;
+    outline-color: gray;
+
 }
 
 button img{
@@ -159,7 +168,7 @@ nav{
 /* ############################## */
 
 /* Timer styling */
-.timer{
+/* .timer{
     height: 20%;
     width: 100%;
     background-color: var(--clr-alice-blue);
