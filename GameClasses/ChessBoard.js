@@ -225,20 +225,13 @@ class GameBoard{
      * @param piece; could be king or a tile the king could move to (in the case of checking for checkmate)
      */
      isCheck(kingPiece, color){//first we need to find all possible attackers, then see if they could attack the king
-        //console.log("isCheck is at least being called");
         var arr = [];
         var attackBool = 0
         var currentPiece;
         for(var i = 0; i<8; i++){
             for(var j = 0; j<8; j++){
                 currentPiece = this.GameBoard[i][j];
-                if(currentPiece.pieceType == 'queen'){
-                    //console.log("Queen is at least being iterated over");
-                }
                 if(currentPiece.color!=color){
-                    if(currentPiece.pieceType == 'queen'){
-                        //console.log("Queen is at least being found");
-                    }
                     attackBool = currentPiece.couldAttack(this, kingPiece);
                     if(attackBool){//if a piece could attack the parameter piece
                         arr.push(currentPiece);
@@ -290,7 +283,6 @@ class GameBoard{
                         checkPieces = this.isCheck(this.GameBoard[i][j], color);//...if all buttons are enabled/disabled first
                         if(checkPieces.length != 0){//if isCheck returns at least one piece the king is in check
                             if(this.isCheckMate(this.GameBoard[i][j])){//checks for checkmate
-                                console.log('game over');//ending UI triggered here instead of console.log
                                 this.triggerEnd(this.GameBoard[i][j]);
                             }
                             this.enableKingOnly(this.GameBoard[i][j]);
@@ -301,6 +293,7 @@ class GameBoard{
             }
             if(checkPieces.length != 0){break;}
         }
+
     }
 
     /**
