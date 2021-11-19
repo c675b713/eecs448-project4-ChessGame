@@ -1,3 +1,4 @@
+
 //import {GamePiece} from '/GameClasses/GamePiece.js'
 //That line does nothing since it is actually included in index.html, but I am an idiot and want to specify that it is included here
 class GameBoard{
@@ -436,4 +437,3 @@ class GameBoard{
         }
     }
 }
-
